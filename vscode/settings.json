@@ -1,0 +1,121 @@
+{
+  //
+  // window
+  //
+  "window.titleBarStyle": "custom",
+  "window.zoomLevel": 1,
+  //
+  // workbench
+  //
+  "workbench.startupEditor": "none",
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f",
+    "statusBar.foreground": "#ffffff",
+    "statusBar.debuggingForeground": "#ffffff"
+  },
+  //
+  // editor
+  //
+  "editor.inlineSuggest.enabled": true,
+  "editor.smoothScrolling": true,
+  "editor.unicodeHighlight.nonBasicASCII": false,
+  //
+  // explorer
+  //
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  //
+  // file
+  //
+  "files.associations": {
+    "*.json": "jsonc" // json にコメント書けるように
+  },
+  "files.autoGuessEncoding": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+  //
+  // terminal
+  //
+  "terminal.integrated.tabs.enabled": false,
+  "terminal.explorerKind": "external",
+  "terminal.integrated.smoothScrolling": true,
+  //
+  // git
+  //
+  "git.autofetch": true,
+  "git.enableSmartCommit": true,
+  "git.openRepositoryInParentFolders": "always",
+  //
+  // github
+  //
+  "githubPullRequests.pullBranch": "never",
+  "github.copilot.editor.enableAutoCompletions": true,
+  //
+  // live server
+  //
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.donotShowInfoMsg": true,
+  //
+  // vscode vim
+  //
+  "vim.leader": "<Space>",
+  "vim.hlsearch": true, // 検索結果をハイライトする
+  "vim.incsearch": true,
+  "vim.useSystemClipboard": true, // OSのクリップボードを利用する
+  "vim.visualstar": true, // visual モードで * で選択した文字列を検索
+  "vim.statusBarColorControl": true, // ref: https://github.com/VSCodeVim/Vim?tab=readme-ov-file#vim-airline
+  "vim.easymotion": true, // <leader><leader>s で文字を検索 ref: https://github.com/VSCodeVim/Vim?tab=readme-ov-file#vim-easymotion
+  "vim.surround": true, // ref: https://github.com/VSCodeVim/Vim?tab=readme-ov-file#vim-surround
+  "vim.normalModeKeyBindings": [
+    {
+      "before": ["<Esc>", "<Esc>"],
+      "commands": [":nohl"]
+    },
+    {
+      "before": ["g", "i"],
+      "commands": ["editor.action.goToImplementation"]
+    },
+    {
+      "before": ["g", "r"],
+      "commands": ["editor.action.goToReferences"]
+    },
+    {
+      "before": ["g", "y"],
+      "commands": ["editor.action.goToTypeDefinition"]
+    },
+    // gd はデフォルトで設定済
+    {
+      "before": ["g", "p"],
+      "commands": ["editor.action.peekDefinition"]
+    }
+  ],
+  "vim.handleKeys": {
+    // vscode のショートカットを使う
+    "<C-S-c>": false, // コピー
+    "<C-S-v>": false, // ペースト
+    "<C-p>": false, // ファイル検索
+    "<C-@>": false, // パネルtoggle
+    "<C-b>": false, // サイドバーtoggle
+    "<C-S-p>": false, // コマンドパレット
+    "<C-S-e>": false, // ファイルエクスプローラ
+    "<C-S-f>": false, // ファイル全検索
+    "<C-S-g>": false, // ソースコントロール 
+    // vim のショートカットを使う
+    "<C-f>": true, // ファイル内検索 </>
+    "<C-s>": true, // ファイル保存 :w 
+    "<C-w>": true, // ファイル閉じる :tabclose
+    "<C-o>": true, // 前のカーソルに戻る
+    "<C-r>": true  // redo
+  },
+  // 標準モード時に英語入力へ
+  "vim.autoSwitchInputMethod.defaultIM": "1",
+  "vim.autoSwitchInputMethod.enable": true,
+  "vim.autoSwitchInputMethod.obtainIMCmd": "/usr/bin/fcitx5-remote",
+  "vim.autoSwitchInputMethod.switchIMCmd": "/usr/bin/fcitx5-remote -t {im}",
+  // パフォーマンス改善
+  "extensions.experimental.affinity": {
+    "vscodevim.vim": 1
+  }
+}

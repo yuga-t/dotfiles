@@ -1,0 +1,22 @@
+[git_branch]
+format = '[$symbol$branch(:$remote_branch)]($style) '
+
+[golang]
+format = '[$symbol($version )]($style)'
+symbol = ' '
+
+[nodejs]
+format = '[$symbol($version )]($style)'
+
+[c]
+format = '[$symbol($version(-$name) )]($style)'
+commands = [
+  ['clang', '--version'],
+  ['gcc', '--version']
+]
+
+[gcloud]
+disabled = true
+
+[aws]
+disabled = true
