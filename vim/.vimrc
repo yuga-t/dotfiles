@@ -14,20 +14,26 @@ set number
 " 現在の行を強調
 set cursorline
 
-" ブロックに応じてインデント
-set smartindent
-
 " コマンドラインの補完
 set wildmenu
 
-" Tab文字を半角スペースに
+" Tab文字を複数の空白入力に
 set expandtab
 
-" 行頭以外のTabの表示幅
-set tabstop=4
+" 画面上でタブが占める幅
+set tabstop=2
 
-" 行頭のTabの表示幅
-set shiftwidth=4
+" 自動インデントでずれる幅
+set shiftwidth=2
+
+" 連続した空白に対してタブキーでカーソルが動く幅
+set softtabstop=2
+
+" 改行時に前の行のインデントを継続する
+set autoindent
+
+" ブロックに応じてインデント
+set smartindent
 
 " 折返し時に表示業単位で移動できるように
 nnoremap j gj
