@@ -16,6 +16,18 @@ cfg.use_ime = true
 
 cfg.xim_im_name = "fcitx"
 
+-- マウスを動かすと消えるので
+-- ref: https://github.com/wez/wezterm/issues/1742#issuecomment-1075333507
+local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
+if success then
+  cfg.xcursor_theme = stdout:gsub("'(.+)'\n", "%1")
+end
+
+local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-size"})
+if success then
+  cfg.xcursor_size = tonumber(stdout)
+end
+
 local act = wezterm.action
 
 -- ref: https://qiita.com/sonarAIT/items/0571c869e5f9ab3be817
