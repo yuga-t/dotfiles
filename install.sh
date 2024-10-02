@@ -24,10 +24,10 @@ else
     exit 1
 fi
 
-if [ ! -d $DOTFILES_DIR ]; then
-    git clone $DOTFILES_REPO $DOTFILES_DIR
+if [ ! -d "$DOTFILES_DIR" ]; then
+    git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
 else
-    git -C $DOTFILES_DIR pull
+    git -C "$DOTFILES_DIR" pull
 fi
 
 echo "[INFO] Cloned dotfiles repository"
@@ -36,7 +36,7 @@ echo "[INFO] Cloned dotfiles repository"
 # Link dotfiles
 #
 
-cd $DOTFILES_DIR
+cd "$DOTFILES_DIR"
 config_files=$(find config -type f)
 
 for link_target in $config_files; do
@@ -45,15 +45,15 @@ for link_target in $config_files; do
     link_name="$HOME/$link_target_trimmed" # リンク先のパス
 
     # もしファイルが存在していればバックアップを取る
-    if [ -e $link_name ] || [ -L $link_name ]; then
-        mv $link_name $link_name.bak-$(echo $(date '+%Y-%m-%dT%H:%M:%S' --utc)Z)
+    if [ -e "$link_name" ] || [ -L "$link_name" ]; then
+        mv "$link_name" "$link_name".bak-$(echo $(date '+%Y-%m-%dT%H:%M:%S' --utc)Z)
         echo "[INFO] Backed up $link_name"
 
-        rm -f $link_name
+        rm -f "$link_name"
     fi
 
-    mkdir -p $(dirname $link_name)
-    ln -sf $link_target $link_name
+    mkdir -p "$(dirname "$link_name")"
+    ln -sf "$link_target" "$link_name"
     echo "[INFO] Linked $link_target to $link_name"
 done
 
@@ -61,15 +61,11 @@ done
 # Set etc files
 #
 
-cp etc/environment /etc/environment
+$SUDO cp etc/environment /etc/environment
 
 #
 # Install packages: TODO
 #
-
-if [ -f /etc/arch-release ]; then
-elif [ -f /etc/debian_version ]; then
-fi
 
 #
 # Finish
