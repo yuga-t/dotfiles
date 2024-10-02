@@ -36,15 +36,12 @@ echo "[INFO] Cloned dotfiles repository"
 # Link dotfiles
 #
 
-cd "$HOME"
-config_files=$(find dotfiles/config -type f)
+cd "$DOTFILES_DIR"
+config_files=$(find config -type f)
 
 for link_target in $config_files; do
 
-    # 先頭2つのパス (dotfiles/config) を削除
-    link_target_trimmed=${link_target#*/}
-    link_target_trimmed=${link_target_trimmed#*/}
-
+    link_target_trimmed=${link_target#*/} # 先頭のパス config を削除
     link_name="$HOME/$link_target_trimmed" # リンク先のパス
 
     # もしファイルが存在していればバックアップを取る
@@ -55,9 +52,11 @@ for link_target in $config_files; do
         rm -f "$link_name"
     fi
 
+    link_target_fullpath="$DOTFILES_DIR/$link_target"
+
     mkdir -p "$(dirname "$link_name")"
-    ln -sf "$link_target" "$link_name"
-    echo "[INFO] Linked $link_target to $link_name"
+    ln -sf "$link_target_fullpath" "$link_name"
+    echo "[INFO] Linked $link_target_fullpath to $link_name"
 done
 
 #
