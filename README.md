@@ -8,5 +8,5 @@
 ## インストール
 
 ```bash
-bash -c "curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh"
+curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 ```
