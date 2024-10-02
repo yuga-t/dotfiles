@@ -64,7 +64,7 @@ done
 # Set etc files
 #
 
-$SUDO cp etc/environment /etc/environment
+$SUDO cp $DOTFILES_DIR/etc/environment /etc/environment
 
 #
 # Install packages: TODO
