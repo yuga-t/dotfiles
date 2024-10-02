@@ -3,7 +3,7 @@
   // window
   //
   "window.titleBarStyle": "custom",
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0.85,
   //
   // workbench
   //
