@@ -52,6 +52,7 @@ for link_target in $config_files; do
         rm -f $link_name
     fi
 
+    mkdir -p $(dirname $link_name)
     ln -sf $link_target $link_name
     echo "[INFO] Linked $link_target to $link_name"
 done
