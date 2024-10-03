@@ -8,7 +8,7 @@ export ZSH_THEME="" #プロンプトのカスタマイズは starship を使う
 # ssh
 zstyle :omz:plugins:ssh-agent identities ~/.ssh/github/id_ed25519
 
-plugins=(ssh-agent ssh aws gcloud poetry fzf emoji docker)
+plugins=(ssh-agent ssh aws gcloud poetry fzf emoji docker colored-man-pages)
 
 #
 # utility
