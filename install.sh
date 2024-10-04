@@ -98,7 +98,6 @@ if [ -f /etc/arch-release ]; then
         xsel \
         git-delta \
         nvm \
-        atuin \
         shellcheck \
         ddcutil \
         fcitx5 \
@@ -109,6 +108,9 @@ if [ -f /etc/arch-release ]; then
         wezterm \
         visual-studio-code-bin \
         google-chrome
+
+    # atuin
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 
 elif [ -f /etc/debian_version ]; then
 
