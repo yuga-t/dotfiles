@@ -21,13 +21,13 @@ set wildmenu
 set expandtab
 
 " 画面上でタブが占める幅
-set tabstop=2
+set tabstop=4
 
 " 自動インデントでずれる幅
-set shiftwidth=2
+set shiftwidth=4
 
 " 連続した空白に対してタブキーでカーソルが動く幅
-set softtabstop=2
+set softtabstop=4
 
 " 改行時に前の行のインデントを継続する
 set autoindent
