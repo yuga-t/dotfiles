@@ -90,6 +90,7 @@ if [ -f /etc/arch-release ]; then
         vim \
         vim-plug \
         tmux \
+        tmux-plugin-manager \
         fzf \
         ripgrep \
         eza \
@@ -124,6 +125,9 @@ elif [ -f /etc/debian_version ]; then
         ddcutil \
         fcitx5 \
         fcitx5-mozc
+
+    # tmux plugin manager
+    git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 
     # sheldon
     curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
