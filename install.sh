@@ -94,6 +94,7 @@ if [ -f /etc/arch-release ]; then
         ripgrep \
         eza \
         bat \
+        xsel \
         git-delta \
         nvm \
         shellcheck \
@@ -117,6 +118,7 @@ elif [ -f /etc/debian_version ]; then
         ripgrep \
         eza \
         bat \
+        xsel \
         git-delta \
         shellcheck \
         ddcutil \
