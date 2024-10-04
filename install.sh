@@ -1,6 +1,10 @@
 #!/bin/bash
 
-set -eux -o pipefail
+set -eu -o pipefail
+
+if [ "$DEBUG" = "true" ]; then
+    set -x
+fi
 
 DOTFILES_REPO="https://github.com/yuga-t/dotfiles.git"
 DOTFILES_DIR="$HOME/dotfiles"
@@ -66,8 +70,50 @@ done
 $SUDO cp $DOTFILES_DIR/etc/environment /etc/environment
 
 #
-# Install packages: TODO
+# Install packages
 #
+
+if [ -f /etc/arch-release ]; then
+
+    # install yay
+    $SUDO pacman -S --needed --noconfirm base-devel git
+    git clone https://aur.archlinux.org/yay-bin.git "$HOME/git/yay-bin" && \
+        cd "$HOME/git/yay-bin" && \
+        makepkg -si --noconfirm && \
+        cd "$HOME"
+
+    yay -S --noconfirm \
+        zsh \
+        sheldon \
+        starship \
+        vim \
+        vim-plug \
+        tmux \
+        fzf \
+        ripgrep \
+        eza \
+        bat \
+        git-delta \
+        nvm \
+        shellcheck \
+        ddcutil \
+        fcitx5 \
+        fcitx5-configtool \
+        fcitx5-mozc \
+        fcitx5-im \
+        ttf-nerd-fonts-symbols-mono \
+        wezterm \
+        visual-studio-code-bin \
+        google-chrome
+
+elif [ -f /etc/debian_version ]; then
+
+    # TODO
+    $SUDO apt install -y \
+        vim \
+        tmux
+
+fi
 
 #
 # Finish
