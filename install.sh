@@ -98,6 +98,7 @@ if [ -f /etc/arch-release ]; then
         xsel \
         git-delta \
         nvm \
+        atuin \
         shellcheck \
         ddcutil \
         fcitx5 \
@@ -142,6 +143,9 @@ elif [ -f /etc/debian_version ]; then
 
     # nvm
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+    # atuin
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 
     echo "[INFO] wezterm, vscode and google-chrome are not installed by this script"
 

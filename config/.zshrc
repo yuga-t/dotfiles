@@ -60,6 +60,13 @@ fi
 setopt no_beep
 
 #
+# atuin
+#
+
+. "$HOME/.atuin/bin/env"
+eval "$(atuin init zsh)"
+
+#
 # sheldon
 #
 
