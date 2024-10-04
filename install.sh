@@ -109,10 +109,35 @@ if [ -f /etc/arch-release ]; then
 
 elif [ -f /etc/debian_version ]; then
 
-    # TODO
     $SUDO apt install -y \
+        zsh \
         vim \
-        tmux
+        tmux \
+        fzf \
+        ripgrep \
+        eza \
+        bat \
+        git-delta \
+        shellcheck \
+        ddcutil \
+        fcitx5 \
+        fcitx5-mozc
+
+    # sheldon
+    curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
+        | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
+
+    # starship
+    curl -sS https://starship.rs/install.sh | sh
+
+    # vim-plug
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+    # nvm
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+    echo "[INFO] wezterm, vscode and google-chrome are not installed by this script"
 
 fi
 
