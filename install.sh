@@ -2,6 +2,7 @@
 
 set -eu -o pipefail
 
+DEBUG="${DEBUG:-}"
 if [ "$DEBUG" = "true" ]; then
     set -x
 fi
@@ -67,7 +68,7 @@ done
 # Set etc files
 #
 
-$SUDO cp $DOTFILES_DIR/etc/environment /etc/environment
+$SUDO cp "$DOTFILES_DIR/etc/environment" /etc/environment
 
 #
 # Install packages
