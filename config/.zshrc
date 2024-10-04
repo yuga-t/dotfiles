@@ -66,6 +66,12 @@ setopt no_beep
 . "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh)"
 
+if has "atuin" && has "fzf"; then
+    alias atuinfzf="atuin history list --cmd-only | fzf"
+else
+    echo "atuin or fzf NOT exist!"
+fi
+
 #
 # sheldon
 #
