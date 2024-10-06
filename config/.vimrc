@@ -83,7 +83,8 @@ set noswapfile
 set autoread
 
 " yank, put する時にクリップボードを使う
-" gvim が必要な場合がある ref: https://wiki.archlinux.jp/index.php/Vim
+" arch: gvim が必要な場合がある ref: https://wiki.archlinux.jp/index.php/Vim
+" debian: vim-gtk3 が必要な場合がある
 set clipboard=unnamedplus
 
 " Leaderキー
