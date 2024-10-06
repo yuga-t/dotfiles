@@ -23,12 +23,39 @@ has() {
 #
 
 # brightness
+
+detect_monitors() {
+  ddcutil detect --terse | grep Monitor: | sed -e 's/.*:.*:.*://'
+}
+
+# usage: setvcp_all <new-value>
+setvcp_all() {
+  local monitor_serials=($(detect_monitors))
+  for serial_num in $monitor_serials; do
+    ddcutil --sn $serial_num setvcp 10 $1
+  done
+}
+
+setvcp_up_all() {
+    local monitor_serials=($(detect_monitors))
+  for serial_num in $monitor_serials; do
+    ddcutil --sn $serial_num setvcp 10 + 7
+  done
+}
+
+setvcp_down_all() {
+    local monitor_serials=($(detect_monitors))
+  for serial_num in $monitor_serials; do
+    ddcutil --sn $serial_num setvcp 10 - 7
+  done
+}
+
 if has "ddcutil"; then
-  alias bup="ddcutil setvcp 10 + 7"
-  alias bdown="ddcutil setvcp 10 - 7"
-  alias bmax="ddcutil setvcp 10 100"
-  alias bmed="ddcutil setvcp 10 50"
-  alias bmin="ddcutil setvcp 10 0"
+  alias bup="setvcp_up_all"
+  alias bdown="setvcp_down_all"
+  alias bmax="setvcp_all 100"
+  alias bmed="setvcp_all 50"
+  alias bmin="setvcp_all 0"
 else
     echo "ddcutil NOT exist!"
 fi
