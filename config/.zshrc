@@ -61,8 +61,8 @@ else
 fi
 
 # night light
-alias nighton="gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 3306"
-alias nightoff="gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 6000"
+alias nighton="gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true && gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 3306"
+alias nightoff="gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled false"
 
 # copy to clipboard
 if has "xsel"; then
