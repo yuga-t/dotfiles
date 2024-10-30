@@ -65,12 +65,6 @@ for link_target in $config_files; do
 done
 
 #
-# Set etc files
-#
-
-$SUDO cp "$DOTFILES_DIR/etc/environment" /etc/environment
-
-#
 # Install packages
 #
 
