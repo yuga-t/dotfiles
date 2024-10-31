@@ -61,6 +61,9 @@ set incsearch
 " ハイライト
 set hlsearch
 
+" vimgrep するとウィンドウで検索結果一覧を表示する
+autocmd QuickFixCmdPost *grep* cwindow
+
 " esc連打でハイライト解除
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
