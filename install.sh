@@ -91,6 +91,7 @@ if [ -f /etc/arch-release ]; then
         bat \
         xsel \
         git-delta \
+        ctags \
         nvm \
         shellcheck \
         ddcutil \
@@ -118,6 +119,7 @@ elif [ -f /etc/debian_version ]; then
         bat \
         xsel \
         git-delta \
+        universal-ctags \
         shellcheck \
         ddcutil \
         fcitx5 \
