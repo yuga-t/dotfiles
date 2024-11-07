@@ -141,8 +141,7 @@ elif [ -f /etc/debian_version ]; then
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     # nvm
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-
+    PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash'
 fi
 
 # atuin
