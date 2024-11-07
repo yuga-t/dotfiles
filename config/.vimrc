@@ -90,6 +90,10 @@ set autoread
 " debian: vim-gtk3 が必要な場合がある
 set clipboard=unnamedplus
 
+" sudoでファイルを保存する
+" ref: https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
+cmap w!! w !sudo tee > /dev/null %
+
 " Leaderキー
 let mapleader = "\<space>"
 
