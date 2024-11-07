@@ -4,6 +4,12 @@ local cfg = wezterm.config_builder()
 
 cfg.color_scheme = 'Bitmute (terminal.sexy)'
 
+-- ref: https://zenn.dev/paiza/articles/9ca689a0365b05
+cfg.font = wezterm.font_with_fallback({
+    { family = "Cica" },
+    { family = "Cica", assume_emoji_presentation = true },
+})
+
 cfg.font_size = 13.5
 
 cfg.window_background_opacity = 0.92

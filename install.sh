@@ -102,10 +102,9 @@ if [ -f /etc/arch-release ]; then
         ttf-nerd-fonts-symbols-mono \
         wezterm \
         visual-studio-code-bin \
-        google-chrome
-
-    # atuin
-    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+        google-chrome \
+        unzip \
+        fontconfig
 
 elif [ -f /etc/debian_version ]; then
 
@@ -123,7 +122,9 @@ elif [ -f /etc/debian_version ]; then
         shellcheck \
         ddcutil \
         fcitx5 \
-        fcitx5-mozc
+        fcitx5-mozc \
+        unzip \
+        fontconfig
 
     # tmux plugin manager
     git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
@@ -142,11 +143,19 @@ elif [ -f /etc/debian_version ]; then
     # nvm
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
 
-    # atuin
-    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+fi
 
+# atuin
+curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
+
+# cica fonts
+curl -L -o /tmp/Cica_v5.0.3.zip https://github.com/miiton/Cica/releases/download/v5.0.3/Cica_v5.0.3.zip
+unzip /tmp/Cica_v5.0.3.zip -d /tmp/Cica_v5.0.3
+$SUDO cp /tmp/Cica_v5.0.3/Cica-*.ttf /usr/local/share/fonts/Cica
+$SUDO fc-cache -fv
+
+if [ -f /etc/arch-release ]; then
     echo "[INFO] wezterm, vscode and google-chrome are not installed by this script"
-
 fi
 
 #
