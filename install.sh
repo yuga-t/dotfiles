@@ -151,6 +151,7 @@ curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 # cica fonts
 curl -L -o /tmp/Cica_v5.0.3.zip https://github.com/miiton/Cica/releases/download/v5.0.3/Cica_v5.0.3.zip
 unzip /tmp/Cica_v5.0.3.zip -d /tmp/Cica_v5.0.3
+$SUDO mkdir -p /usr/local/share/fonts/Cica
 $SUDO cp /tmp/Cica_v5.0.3/Cica-*.ttf /usr/local/share/fonts/Cica
 $SUDO fc-cache -fv
 
