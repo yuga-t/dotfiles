@@ -105,6 +105,8 @@ call plug#begin()
   Plug 'vim-airline/vim-airline'
 
   Plug 'preservim/nerdtree'
+  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'ryanoasis/vim-devicons'
 
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
