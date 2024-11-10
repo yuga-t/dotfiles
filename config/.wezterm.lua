@@ -10,7 +10,7 @@ cfg.font = wezterm.font_with_fallback({
     { family = "Cica", assume_emoji_presentation = true },
 })
 
-cfg.font_size = 13.5
+cfg.font_size = 17.0
 
 cfg.window_background_opacity = 0.92
 
