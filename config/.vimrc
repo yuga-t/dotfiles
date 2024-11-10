@@ -112,7 +112,7 @@ call plug#begin()
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-surround'
 
-  Plug 'jreybert/vimagit'
+  Plug 'tpope/vim-fugitive'
 
   Plug 'easymotion/vim-easymotion'
 
