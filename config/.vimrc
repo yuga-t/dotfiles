@@ -64,6 +64,17 @@ set hlsearch
 " vimgrep するとウィンドウで検索結果一覧を表示する
 autocmd QuickFixCmdPost *grep* cwindow
 
+" quickfix での移動
+
+" 前へ
+nnoremap [q :cprevious<CR>
+" 次へ
+nnoremap ]q :cnext<CR>
+" 最初へ
+nnoremap [Q :<C-u>cfirst<CR>
+" 最後へ
+nnoremap ]Q :<C-u>clast<CR>
+
 " esc連打でハイライト解除
 nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
