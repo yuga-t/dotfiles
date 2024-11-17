@@ -152,23 +152,24 @@
   // TERMINAL SHORTCUTS
   //
   {
-    "key": "ctrl+.",
-    "command": "workbench.action.terminal.focus"
+    "key": "ctrl+[BracketLeft]",
+    "command": "workbench.action.focusPanel",
+    "when": "editorTextFocus"
   },
   {
-    "key": "ctrl+.",
+    "key": "ctrl+[BracketLeft]",
     "command": "workbench.action.focusActiveEditorGroup",
-    "when": "terminalFocus"
+    "when": "panelFocus"
   },
   {
     "key": "ctrl+]",
     "command": "workbench.action.nextPanelView",
-    "when": "panelFocus"
+    "when": "panelVisible"
   },
   {
     "key": "ctrl+[",
     "command": "workbench.action.previousPanelView",
-    "when": "panelFocus"
+    "when": "panelVisible"
   },
   //
   // OTHERS
