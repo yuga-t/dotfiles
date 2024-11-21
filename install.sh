@@ -84,7 +84,6 @@ if [ -f /etc/arch-release ]; then
         vim \
         vim-plug \
         tmux \
-        tmux-plugin-manager \
         fzf \
         ripgrep \
         eza \
@@ -125,9 +124,6 @@ elif [ -f /etc/debian_version ]; then
         unzip \
         fontconfig
 
-    # tmux plugin manager
-    git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
-
     # sheldon
     curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
         | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin
@@ -139,6 +135,9 @@ elif [ -f /etc/debian_version ]; then
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
+
+# tmux plugin manager
+git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
 
 # nvm
 PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash'
