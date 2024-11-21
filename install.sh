@@ -92,7 +92,6 @@ if [ -f /etc/arch-release ]; then
         xsel \
         git-delta \
         ctags \
-        nvm \
         shellcheck \
         ddcutil \
         fcitx5 \
@@ -139,10 +138,10 @@ elif [ -f /etc/debian_version ]; then
     # vim-plug
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-    # nvm
-    PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash'
 fi
+
+# nvm
+PROFILE=/dev/null bash -c 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash'
 
 # atuin
 curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
