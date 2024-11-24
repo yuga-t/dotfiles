@@ -89,14 +89,6 @@ else
   echo "bat NOT exist!"
 fi
 
-# git
-if has "git"; then
-    alias gres="git restore ."
-    alias gress="git restore --staged ."
-else
-    echo "git NOT exist!"
-fi
-
 #
 # others
 #
