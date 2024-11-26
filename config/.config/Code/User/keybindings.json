@@ -139,6 +139,10 @@
   // SEARCH LIST SHORTCUTS
   //
   {
+    "key": "ctrl+shift+/",
+    "command": "search.action.focusNextSearchResult"
+  },
+  {
     "key": "ctrl+shift+j",
     "command": "search.focus.nextInputBox",
     "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible"
@@ -149,7 +153,7 @@
     "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible && !searchInputBoxFocus"
   },
   //
-  // TERMINAL SHORTCUTS
+  // PANEL SHORTCUTS
   //
   {
     "key": "ctrl+[BracketLeft]",
@@ -170,6 +174,13 @@
     "key": "ctrl+[",
     "command": "workbench.action.previousPanelView",
     "when": "panelVisible"
+  },
+  //
+  // ERROR LIST SHORTCUTS
+  //
+  {
+    "key": "ctrl+shift+q",
+    "command": "workbench.actions.view.problems"
   },
   //
   // OTHERS
