@@ -139,8 +139,14 @@
   // SEARCH LIST SHORTCUTS
   //
   {
-    "key": "ctrl+shift+/",
-    "command": "search.action.focusNextSearchResult"
+    "key": "shift+space n",
+    "command": "search.action.focusNextSearchResult",
+    "when": "inSearchEditor || searchViewletVisible"
+  },
+  {
+    "key": "shift+space p",
+    "command": "search.action.focusPreviousSearchResult",
+    "when": "inSearchEditor || searchViewletVisible"
   },
   {
     "key": "ctrl+shift+j",
@@ -176,11 +182,20 @@
     "when": "panelVisible"
   },
   //
+  // TERMINAL SHORTCUTS
+  //
+  {
+    "key": "shift+space t",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "vim.mode != 'SearchInProgressMode' && vim.mode != 'Insert'"
+  },
+  //
   // ERROR LIST SHORTCUTS
   //
   {
-    "key": "ctrl+shift+q",
-    "command": "workbench.actions.view.problems"
+    "key": "shift+space q",
+    "command": "workbench.actions.view.problems",
+    "when": "vim.mode != 'SearchInProgressMode' && vim.mode != 'Insert'"
   },
   //
   // OTHERS
