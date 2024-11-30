@@ -104,10 +104,6 @@
     "when": "explorerResourceMoveableToTrash && filesExplorerFocus && foldersViewVisible && !explorerResourceReadonly && !inputFocus"
   },
   {
-    "key": "ctrl+shift+d",
-    "command": "duplicate.execute"
-  },
-  {
     "key": "ctrl+r",
     "command": "renameFile",
     "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
