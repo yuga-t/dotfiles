@@ -139,7 +139,7 @@ call plug#end()
 " nerdtree
 "
 
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeFind<CR>
 
 " ドットファイルを表示
 let NERDTreeShowHidden=1
