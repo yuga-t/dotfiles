@@ -101,13 +101,13 @@
     "<C-S-p>": false, // コマンドパレット
     "<C-S-e>": false, // ファイルエクスプローラ
     "<C-S-f>": false, // ファイル全検索
-    "<C-S-g>": false, // ソースコントロール 
+    "<C-S-g>": false, // ソースコントロール
     // vim のショートカットを使う
     "<C-f>": true, // ファイル内検索 </>
-    "<C-s>": true, // ファイル保存 :w 
+    "<C-s>": true, // ファイル保存 :w
     "<C-w>": true, // ファイル閉じる :tabclose
     "<C-o>": true, // 前のカーソルに戻る
-    "<C-r>": true  // redo
+    "<C-r>": true // redo
   },
   // 標準モード時に英語入力へ
   "vim.autoSwitchInputMethod.defaultIM": "1",
