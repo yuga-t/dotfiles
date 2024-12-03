@@ -21,7 +21,11 @@
   features = Dracula
 
 [merge]
+  tool = vimdiff
   conflictstyle = diff3
+
+[mergetool]
+  keepBackup = false
 
 [diff]
   colorMoved = default
