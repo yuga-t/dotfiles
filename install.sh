@@ -146,7 +146,7 @@ elif [ -f /etc/debian_version ]; then
 
     # yazi
     mkdir -p /tmp/yazi
-    curl -oL /tmp/yazi/downloaded https://github.com/sxyazi/yazi/releases/download/v0.3.3/yazi-x86_64-unknown-linux-gnu.zip
+    curl -o /tmp/yazi/downloaded -L https://github.com/sxyazi/yazi/releases/download/v0.3.3/yazi-x86_64-unknown-linux-gnu.zip
     unzip /tmp/yazi/downloaded -d /tmp/yazi/unzipped
     mv /tmp/yazi/unzipped/yazi-x86_64-unknown-linux-gnu/ya ~/.local/bin
     mv /tmp/yazi/unzipped/yazi-x86_64-unknown-linux-gnu/yazi ~/.local/bin
