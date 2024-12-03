@@ -1,0 +1,27 @@
+[user]
+  email = yygg.priv@gmail.com
+  name = yuga-t
+
+[core]
+  editor = vim
+  pager = delta
+
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true # use n and N to move between diff sections
+  side-by-side = true
+  features = Dracula
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = default
