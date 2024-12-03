@@ -1,23 +1,29 @@
 # dotfiles
 
-環境
+## Supported OS
 
-- Arch or Debian based Linux
-- GNOME Wayland
+- Arch based Linux
+- Debian based Linux
 
-## インストール
+## Install
 
 ```bash
 curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 ```
 
-## 既知の問題
+## Minimal Install
 
-### fcitx5 が自動起動しない
+```bash
+curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install_mini.sh | bash
+```
 
-以下のコマンドで自動起動するようになるはず。
-ref: https://fcitx-im.org/wiki/Setup_Fcitx_5 
+## Tips
+
+### autostart fcitx5
 
 ```bash
 mkdir -p ~/.config/autostart && cp /usr/share/applications/org.fcitx.Fcitx5.desktop ~/.config/autostart
 ```
+
+ref: https://fcitx-im.org/wiki/Setup_Fcitx_5 
+
