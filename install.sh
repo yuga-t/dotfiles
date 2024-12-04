@@ -131,7 +131,20 @@ elif [ -f /etc/debian_version ]; then
         fcitx5 \
         fcitx5-mozc \
         unzip \
-        fontconfig
+        fontconfig \
+        ffmpegthumbnailer \
+        ffmpeg \
+        p7zip \
+        jq \
+        poppler-utils \
+        fd-find \
+        imagemagick
+
+    # link bat to batcat
+    ln -s $(which batcat) ~/.local/bin/bat
+
+    # link fd to fdfind
+    ln -s $(which fdfind) ~/.local/bin/fd
 
     # sheldon
     curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
