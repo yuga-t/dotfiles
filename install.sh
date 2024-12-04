@@ -137,14 +137,19 @@ elif [ -f /etc/debian_version ]; then
         p7zip \
         jq \
         poppler-utils \
-        fd-find \
-        imagemagick
+        fd-find
 
     # link bat to batcat
     ln -s $(which batcat) ~/.local/bin/bat
 
     # link fd to fdfind
     ln -s $(which fdfind) ~/.local/bin/fd
+
+    # imagemagick
+    mkdir -p /tmp/imagemagick
+    curl -o /tmp/imagemagick/magick -L https://imagemagick.org/archive/binaries/magick
+    mv /tmp/imagemagick/magick ~/.local/bin
+    chmod +x ~/.local/bin/magick
 
     # sheldon
     curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh \
