@@ -194,6 +194,15 @@
     "when": "vim.mode != 'SearchInProgressMode' && vim.mode != 'Insert'"
   },
   //
+  // QUICK FIX OPEN EXTENSIONS
+  // Ref: https://github.com/VSCodeVim/Vim/issues/3556#issuecomment-653880134
+  //
+  {
+    "key": "ctrl+.",
+    "command": "keyboard-quickfix.openQuickFix",
+    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly && vim.active"
+  },
+  //
   // OTHERS
   //
   {
@@ -218,5 +227,14 @@
   {
     "key": "ctrl+v",
     "command": "-editor.action.clipboardPasteAction"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "-workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "-workbench.action.search.toggleQueryDetails",
+    "when": "inSearchEditor || searchViewletFocus"
   }
 ]
