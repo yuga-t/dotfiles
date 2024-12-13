@@ -29,3 +29,6 @@
 
 [diff]
   colorMoved = default
+
+[push]
+  autoSetupRemote = true
