@@ -203,6 +203,12 @@
     "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly && vim.active"
   },
   //
+  // SHOW DOCUMENTATION
+  {
+    "key": "shift+k",
+    "command": "editor.action.showDefinitionPreviewHover"
+  },
+  //
   // OTHERS
   //
   {
