@@ -184,7 +184,7 @@ nmap <Leader>s <Plug>(easymotion-overwin-f)
 " coc.nvim
 "
 
-let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go', 'coc-clangd']
+let g:coc_global_extensions = ['coc-json', 'coc-git', 'coc-go', 'coc-clangd', 'coc-rust-analyzer']
 
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable
