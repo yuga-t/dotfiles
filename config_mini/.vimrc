@@ -246,6 +246,5 @@ endfunction
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
-" backgroud color
-hi CocFloating ctermbg=DarkGrey
-
+" ref: https://github.com/neoclide/coc.nvim/issues/3473#issuecomment-974748337
+autocmd VimEnter,ColorScheme * hi! link CocFloating CocHintFloat
