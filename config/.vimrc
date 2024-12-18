@@ -246,5 +246,10 @@ endfunction
 " Highlight the symbol and its references when holding the cursor
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
+" Scroll floating window
+" ref: https://stackoverflow.com/questions/69720683/how-to-scroll-the-hover-area-in-vim-when-showing-documentation-with-coc-nvim
+nnoremap <silent><nowait><expr> <C-j> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-j>"
+nnoremap <silent><nowait><expr> <C-k> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-k>"
+
 " ref: https://github.com/neoclide/coc.nvim/issues/3473#issuecomment-974748337
 autocmd VimEnter,ColorScheme * hi! link CocFloating CocHintFloat
