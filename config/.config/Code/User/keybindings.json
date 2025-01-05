@@ -206,7 +206,8 @@
   // SHOW DOCUMENTATION
   {
     "key": "shift+k",
-    "command": "editor.action.showDefinitionPreviewHover"
+    "command": "editor.action.showDefinitionPreviewHover",
+    "when": "vim.mode == 'Normal' && editorTextFocus"
   },
   //
   // OTHERS
