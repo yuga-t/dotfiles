@@ -2,8 +2,6 @@ local wezterm = require 'wezterm'
 
 local cfg = wezterm.config_builder()
 
-cfg.color_scheme = 'Galizur'
-
 -- ref: https://zenn.dev/paiza/articles/9ca689a0365b05
 cfg.font = wezterm.font_with_fallback({
     { family = "Cica" },
