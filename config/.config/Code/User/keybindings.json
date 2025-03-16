@@ -76,6 +76,17 @@
     "command": "search.focus.previousInputBox",
     "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible && !searchInputBoxFocus"
   },
+  // 定義ホバーのスクロール
+  {
+    "key": "ctrl+j",
+    "command": "editor.action.scrollDownHover",
+    "when": "vim.mode == 'Normal' && editorHoverFocused"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "editor.action.scrollUpHover",
+    "when": "vim.mode == 'Normal' && editorHoverFocused"
+  },
   //
   // ファイルエクスプローラ
   //
