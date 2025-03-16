@@ -1,7 +1,8 @@
 [
   //
-  // VIM NAVIGATION SHORTCUTS
+  // vimのように移動できるようにする
   //
+  // エディタグループの移動
   {
     "key": "ctrl+h",
     "command": "workbench.action.focusLeftGroup",
@@ -22,9 +23,7 @@
     "command": "workbench.action.focusBelowGroup",
     "when": "editorTextFocus && vim.active && vim.mode != 'Insert'"
   },
-  //
-  // SUGGESTIONS AND AUTOCOMPLETION SHORTCUTS
-  //
+  // 自動補完と提案の選択
   {
     "key": "ctrl+j",
     "command": "selectNextSuggestion",
@@ -45,8 +44,40 @@
     "command": "workbench.action.quickOpenSelectPrevious",
     "when": "inQuickOpen"
   },
+  // ファイルエクスプローラ内の移動
+  {
+    "key": "ctrl+h",
+    "command": "list.collapse",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "list.expand",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "list.focusUp",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "list.focusDown",
+    "when": "listFocus && !inputFocus"
+  },
+  // 検索リストの移動
+  {
+    "key": "ctrl+shift+j",
+    "command": "search.focus.nextInputBox",
+    "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "search.focus.previousInputBox",
+    "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible && !searchInputBoxFocus"
+  },
   //
-  // FILE EXPLORER SHORTCUTS
+  // ファイルエクスプローラ
   //
   {
     "key": "ctrl+shift+e",
@@ -109,30 +140,7 @@
     "when": "filesExplorerFocus && foldersViewVisible && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
   },
   //
-  // FILE EXPLORER NAVIGATION SHORTCUTS
-  //
-  {
-    "key": "ctrl+h",
-    "command": "list.collapse",
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "ctrl+l",
-    "command": "list.expand",
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "ctrl+k",
-    "command": "list.focusUp",
-    "when": "listFocus && !inputFocus"
-  },
-  {
-    "key": "ctrl+j",
-    "command": "list.focusDown",
-    "when": "listFocus && !inputFocus"
-  },
-  //
-  // SEARCH LIST SHORTCUTS
+  // 検索リスト
   //
   {
     "key": "shift+space n",
@@ -144,18 +152,8 @@
     "command": "search.action.focusPreviousSearchResult",
     "when": "inSearchEditor || searchViewletVisible"
   },
-  {
-    "key": "ctrl+shift+j",
-    "command": "search.focus.nextInputBox",
-    "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible"
-  },
-  {
-    "key": "ctrl+shift+k",
-    "command": "search.focus.previousInputBox",
-    "when": "inSearchEditor && inputBoxFocus || inputBoxFocus && searchViewletVisible && !searchInputBoxFocus"
-  },
   //
-  // PANEL SHORTCUTS
+  // パネル
   //
   {
     "key": "ctrl+[BracketLeft]",
@@ -178,7 +176,7 @@
     "when": "panelVisible"
   },
   //
-  // TERMINAL SHORTCUTS
+  // ターミナル
   //
   {
     "key": "shift+space t",
@@ -186,7 +184,7 @@
     "when": "vim.mode != 'SearchInProgressMode' && vim.mode != 'Insert'"
   },
   //
-  // ERROR LIST SHORTCUTS
+  // エラーリスト
   //
   {
     "key": "shift+space q",
@@ -194,8 +192,8 @@
     "when": "vim.mode != 'SearchInProgressMode' && vim.mode != 'Insert'"
   },
   //
-  // QUICK FIX OPEN EXTENSIONS
-  // Ref: https://github.com/VSCodeVim/Vim/issues/3556#issuecomment-653880134
+  // quickfix
+  // ref: https://github.com/VSCodeVim/Vim/issues/3556#issuecomment-653880134
   //
   {
     "key": "ctrl+.",
@@ -203,24 +201,25 @@
     "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly && vim.active"
   },
   //
-  // SHOW DOCUMENTATION
+  // 定義を見る
+  //
   {
     "key": "shift+k",
     "command": "editor.action.showDefinitionPreviewHover",
     "when": "vim.mode == 'Normal' && editorTextFocus"
   },
   //
-  // OTHERS
+  // コピー&ペースト
   //
-  {
-    "key": "ctrl+v",
-    "command": "workbench.action.terminal.paste",
-    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
-  },
   {
     "key": "ctrl+c",
     "command": "workbench.action.terminal.copySelection",
     "when": "terminalFocus && terminalHasBeenCreated && terminalTextSelected || terminalFocus && terminalProcessSupported && terminalTextSelected"
+  },
+  {
+    "key": "ctrl+v",
+    "command": "workbench.action.terminal.paste",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
   },
   {
     "key": "ctrl+shift+v",
@@ -235,6 +234,9 @@
     "key": "ctrl+v",
     "command": "-editor.action.clipboardPasteAction"
   },
+  //
+  // 無効化しておく
+  //
   {
     "key": "ctrl+j",
     "command": "-workbench.action.togglePanel"
@@ -243,5 +245,51 @@
     "key": "ctrl+shift+j",
     "command": "-workbench.action.search.toggleQueryDetails",
     "when": "inSearchEditor || searchViewletFocus"
-  }
+  },
+  //
+  // vscodevimを使ってるとnormal modeで<tab><esc>が効かないので
+  // ref: https://github.com/VSCodeVim/Vim/issues/9459#issuecomment-2648156285
+  //
+  {
+    "key": "escape",
+    "command": "-extension.vim_escape",
+    "when": "editorTextFocus && vim.active && !inDebugRepl"
+  },
+  {
+    "key": "escape",
+    "command": "extension.vim_escape",
+    "when": "editorTextFocus && vim.active && !inDebugRepl && !testing.isPeekVisible && !testing.isInPeek && (vim.mode == 'Insert' || !notebookEditorFocused) && !inlineEditIsVisible && !suggestWidgetVisible && !findWidgetVisible && !dirtyDiffVisible"
+  },
+  {
+    "key": "escape",
+    "command": "runCommands",
+    "when": "vim.mode == 'Insert' && inlineEditIsVisible",
+    "args": {
+      "commands": [
+        "editor.action.inlineSuggest.hide",
+        "extension.vim_escape"
+      ]
+    }
+  },
+  {
+    "key": "escape",
+    "command": "runCommands",
+    "when": "vim.mode == 'Insert' && suggestWidgetVisible",
+    "args": {
+      "commands": [
+        "hideSuggestWidget",
+        "extension.vim_escape"
+      ]
+    }
+  },
+  {
+    "key": "escape",
+    "command": "-hideSuggestWidget",
+    "when": "suggestWidgetVisible && textInputFocus"
+  },
+  {
+    "key": "escape",
+    "command": "hideSuggestWidget",
+    "when": "suggestWidgetVisible && textInputFocus && !vim.active"
+  },
 ]

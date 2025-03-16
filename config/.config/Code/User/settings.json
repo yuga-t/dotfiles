@@ -52,11 +52,7 @@
   //
   "githubPullRequests.pullBranch": "never",
   "github.copilot.editor.enableAutoCompletions": true,
-  //
-  // live server
-  //
-  "liveServer.settings.CustomBrowser": "chrome",
-  "liveServer.settings.donotShowInfoMsg": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
   //
   // vscode vim
   //
@@ -70,25 +66,50 @@
   "vim.surround": true, // ref: https://github.com/VSCodeVim/Vim?tab=readme-ov-file#vim-surround
   "vim.normalModeKeyBindings": [
     {
-      "before": ["<Esc>", "<Esc>"],
-      "commands": [":nohl"]
+      "before": [
+        "<Esc>",
+        "<Esc>"
+      ],
+      "commands": [
+        ":nohl"
+      ]
     },
     {
-      "before": ["g", "i"],
-      "commands": ["editor.action.goToImplementation"]
+      "before": [
+        "g",
+        "i"
+      ],
+      "commands": [
+        "editor.action.goToImplementation"
+      ]
     },
     {
-      "before": ["g", "r"],
-      "commands": ["editor.action.goToReferences"]
+      "before": [
+        "g",
+        "r"
+      ],
+      "commands": [
+        "editor.action.goToReferences"
+      ]
     },
     {
-      "before": ["g", "y"],
-      "commands": ["editor.action.goToTypeDefinition"]
+      "before": [
+        "g",
+        "y"
+      ],
+      "commands": [
+        "editor.action.goToTypeDefinition"
+      ]
     },
     // gd はデフォルトで設定済
     {
-      "before": ["g", "p"],
-      "commands": ["editor.action.peekDefinition"]
+      "before": [
+        "g",
+        "p"
+      ],
+      "commands": [
+        "editor.action.peekDefinition"
+      ]
     }
   ],
   "vim.handleKeys": {
@@ -117,5 +138,9 @@
   // パフォーマンス改善
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1
-  }
+  },
+  //
+  // rust
+  //
+  "rust-analyzer.check.command": "clippy"
 }
