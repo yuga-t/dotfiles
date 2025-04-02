@@ -87,6 +87,15 @@
     "command": "editor.action.scrollUpHover",
     "when": "vim.mode == 'Normal' && editorHoverFocused"
   },
+  // ターミナルの上下
+  {
+    "key": "alt+j",
+    "command": "workbench.action.terminal.resizePaneDown"
+  },
+  {
+    "key": "alt+k",
+    "command": "workbench.action.terminal.resizePaneUp"
+  },
   //
   // ファイルエクスプローラ
   //
