@@ -265,6 +265,13 @@
     "command": "-editor.action.clipboardPasteAction"
   },
   //
+  // リロードウィンドウ
+  //
+  {
+    "key": "shift+space r",
+    "command": "workbench.action.reloadWindow"
+  },
+  //
   // 無効化しておく
   //
   {
@@ -277,49 +284,37 @@
     "when": "inSearchEditor || searchViewletFocus"
   },
   //
-  // vscodevimを使ってるとnormal modeで<tab><esc>が効かないので
-  // ref: https://github.com/VSCodeVim/Vim/issues/9459#issuecomment-2648156285
+  // cursor
   //
   {
-    "key": "escape",
-    "command": "-extension.vim_escape",
-    "when": "editorTextFocus && vim.active && !inDebugRepl"
+    "key": "ctrl+i",
+    "command": "-composer.startComposerPrompt"
+  },
+  // generate in terminal
+  {
+    "key": "ctrl+k",
+    "command": "-cursorai.action.generateInTerminal",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
   },
   {
-    "key": "escape",
-    "command": "extension.vim_escape",
-    "when": "editorTextFocus && vim.active && !inDebugRepl && !testing.isPeekVisible && !testing.isInPeek && (vim.mode == 'Insert' || !notebookEditorFocused) && !inlineEditIsVisible && !suggestWidgetVisible && !findWidgetVisible && !dirtyDiffVisible"
+    "key": "ctrl+h",
+    "command": "cursorai.action.generateInTerminal",
+    "when": "terminalFocus && terminalHasBeenCreated || terminalFocus && terminalProcessSupported"
+  },
+  // edit in editor
+  {
+    "key": "ctrl+k",
+    "command": "-aipopup.action.modal.generate",
+    "when": "editorFocus && !composerBarIsVisible"
   },
   {
-    "key": "escape",
-    "command": "runCommands",
-    "when": "vim.mode == 'Insert' && inlineEditIsVisible",
-    "args": {
-      "commands": [
-        "editor.action.inlineSuggest.hide",
-        "extension.vim_escape"
-      ]
-    }
+    "key": "ctrl+shift+k",
+    "command": "-aipopup.action.modal.generate",
+    "when": "editorFocus && !composerBarIsVisible"
   },
   {
-    "key": "escape",
-    "command": "runCommands",
-    "when": "vim.mode == 'Insert' && suggestWidgetVisible",
-    "args": {
-      "commands": [
-        "hideSuggestWidget",
-        "extension.vim_escape"
-      ]
-    }
-  },
-  {
-    "key": "escape",
-    "command": "-hideSuggestWidget",
-    "when": "suggestWidgetVisible && textInputFocus"
-  },
-  {
-    "key": "escape",
-    "command": "hideSuggestWidget",
-    "when": "suggestWidgetVisible && textInputFocus && !vim.active"
-  },
+    "key": "ctrl+h",
+    "command": "aipopup.action.modal.generate",
+    "when": "editorFocus && !composerBarIsVisible"
+  }
 ]

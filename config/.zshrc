@@ -110,6 +110,15 @@ else
 fi
 
 #
+# cursor
+#
+if [ -f ~/Applications/cursor.AppImage ]; then
+    alias cursor='~/Applications/cursor.AppImage --no-sandbox'
+else
+    echo "~/Applications/cursor.AppImage NOT exist!"
+fi
+
+#
 # sheldon
 #
 
