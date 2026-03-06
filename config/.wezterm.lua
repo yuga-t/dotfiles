@@ -22,6 +22,9 @@ cfg.xim_im_name = "fcitx"
 
 cfg.warn_about_missing_glyphs = false
 
+-- この設定をしないとwaylandで動かない
+cfg.enable_wayland = false
+
 -- マウスを動かすと消えるので
 -- ref: https://github.com/wez/wezterm/issues/1742#issuecomment-1075333507
 local success, stdout, stderr = wezterm.run_child_process({"gsettings", "get", "org.gnome.desktop.interface", "cursor-theme"})
