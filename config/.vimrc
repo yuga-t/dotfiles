@@ -131,8 +131,6 @@ call plug#begin()
   Plug 'michaeljsmith/vim-indent-object'
 
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-  Plug 'github/copilot.vim'
 call plug#end()
 
 "

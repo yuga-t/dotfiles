@@ -110,22 +110,6 @@ else
 fi
 
 #
-# cursor
-#
-
-# ref: https://github.com/getcursor/cursor/issues/1005#issuecomment-2371898678
-cursor_fn() {
-    args=("$@")
-    (nohup ~/Applications/cursor.AppImage "${args[@]}" --no-sandbox </dev/null >/dev/null 2>&1 &)
-}
-
-if [ -f ~/Applications/cursor.AppImage ]; then
-    alias cursor="cursor_fn"
-else
-    echo "~/Applications/cursor.AppImage NOT exist!"
-fi
-
-#
 # sheldon
 #
 
