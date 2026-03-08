@@ -26,3 +26,14 @@ fi
 if [ -f "${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml" ]; then
     export AQUA_GLOBAL_CONFIG=${XDG_CONFIG_HOME:-$HOME/.config}/aquaproj-aqua/aqua.yaml
 fi
+
+# android studio
+if [ -d "/usr/local/android-studio/jbr" ]; then
+    export JAVA_HOME=/usr/local/android-studio/jbr
+    export PATH=$JAVA_HOME/bin:$PATH
+fi
+
+# adb
+if [ -f "/usr/bin/adb" ]; then
+    export ADB=/usr/bin/adb
+fi

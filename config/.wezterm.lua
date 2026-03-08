@@ -68,6 +68,12 @@ cfg.keys = {
       mods = "CTRL",
     },
   },
+  -- Shift+Enterで改行を送信
+  {
+    key = 'Enter',
+    mods = 'SHIFT',
+    action = wezterm.action.SendString('\n')
+  },
 }
 
 -- ウィンドウを最大で開く
