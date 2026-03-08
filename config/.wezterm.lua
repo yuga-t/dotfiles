@@ -68,7 +68,7 @@ cfg.keys = {
       mods = "CTRL",
     },
   },
-  -- Shift+Enterで改行を送信
+  -- Shift+Enterで改行を送信 (Claude Code のために)
   {
     key = 'Enter',
     mods = 'SHIFT',
