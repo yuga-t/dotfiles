@@ -25,7 +25,7 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 |---|---|---|
 | `install.sh` | ◯ | git の `pull` + `link.sh` + `packages.sh` を順に再実行 |
 | `link.sh` | ◯ (idempotent) | 変化のないファイルはスキップ。差分があるものだけバックアップ + 更新 |
-| `packages.sh` | △ | apt は冪等。curl 経由（starship/nvm/atuin/yazi 等）は再ダウンロード・再インストールされる |
+| `packages.sh` | ◯ (idempotent) | apt も curl 経由のインストールも、既に入っているものはスキップする |
 
 `link.sh` のファイル別ルール:
 
@@ -48,7 +48,9 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 | VSCode 設定 | `~/.config/Code/User/settings.json`(生成物) | `~/.config/Code/User/settings.local.json` |
 | VSCode キーバインド | `~/.config/Code/User/keybindings.json`(生成物) | `~/.config/Code/User/keybindings.local.json` |
 
-`~/.gitconfig` には `user.email` を書かない。マシン毎に `~/.gitconfig.local` で設定する:
+### 初回セットアップで必須: `~/.gitconfig.local`
+
+`~/.gitconfig` には `user.email` を書いていないので、`git commit` する前に `~/.gitconfig.local` で設定する。
 
 ```ini
 [user]
@@ -87,3 +89,7 @@ mkdir -p ~/.config/autostart && cp /usr/share/applications/org.fcitx.Fcitx5.desk
 ```
 
 ref: https://fcitx-im.org/wiki/Setup_Fcitx_5
+
+### GNOME ショートカット
+
+dconf 経由でエクスポート/インポートする手順は [`gnome/README.md`](gnome/README.md) を参照。`install.sh` からは自動適用されない（手動運用）。
