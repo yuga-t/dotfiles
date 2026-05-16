@@ -50,7 +50,7 @@ expect_symlink .config/fcitx5/conf/mozc.conf
 expect_symlink .config/sheldon/plugins.toml
 expect_symlink .config/starship.toml
 expect_symlink .config/user-dirs.dirs
-expect_symlink environment.d/envs.conf
+expect_symlink .config/environment.d/envs.conf
 
 echo
 echo '=== Verify VSCode files are merged (not symlinks) ==='

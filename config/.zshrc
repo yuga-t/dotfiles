@@ -16,8 +16,6 @@ plugins=(
     colored-man-pages
     fzf
     emoji
-    aws
-    gcloud
 )
 
 #
@@ -66,19 +64,17 @@ if has "ddcutil"; then
   alias bmax="setvcp_all 100"
   alias bmed="setvcp_all 50"
   alias bmin="setvcp_all 0"
-else
-    echo "ddcutil NOT exist!"
 fi
 
 # night light
 alias nighton="gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true && gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 3306"
 alias nightoff="gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled false"
 
-# copy to clipboard
-if has "xsel"; then
+# copy to clipboard (Wayland優先、X11フォールバック)
+if has "wl-copy"; then
+    alias clip="wl-copy"
+elif has "xsel"; then
     alias clip="xsel --clipboard --input"
-else
-    echo "xsel NOT exist!"
 fi
 
 #
@@ -92,13 +88,14 @@ setopt no_beep
 # atuin
 #
 
-. "$HOME/.atuin/bin/env"
-eval "$(atuin init zsh)"
-
-if has "atuin" && has "fzf"; then
-    alias atuinfzf="atuin history list --cmd-only | fzf"
-else
-    echo "atuin or fzf NOT exist!"
+if [ -f "$HOME/.atuin/bin/env" ]; then
+    . "$HOME/.atuin/bin/env"
+fi
+if has "atuin"; then
+    eval "$(atuin init zsh)"
+    if has "fzf"; then
+        alias atuinfzf="atuin history list --cmd-only | fzf"
+    fi
 fi
 
 #

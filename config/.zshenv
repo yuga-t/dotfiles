@@ -10,12 +10,12 @@ if [ -d "/usr/local/go/bin" ] && [ -d "$HOME/go/bin" ]; then
 fi
 
 # rust
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-# nvm
-if [ -d "$HOME/.nvm" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# fnm (Node version manager)
+if [ -d "$HOME/.local/share/fnm" ]; then
+    export PATH="$HOME/.local/share/fnm:$PATH"
+    eval "$(fnm env --use-on-cd --shell zsh)"
 fi
 
 # aqua
@@ -31,11 +31,6 @@ fi
 if [ -d "/usr/local/android-studio/jbr" ]; then
     export JAVA_HOME=/usr/local/android-studio/jbr
     export PATH=$JAVA_HOME/bin:$PATH
-fi
-
-# adb
-if [ -f "/usr/bin/adb" ]; then
-    export ADB=/usr/bin/adb
 fi
 
 # bun

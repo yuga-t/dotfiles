@@ -1,6 +1,6 @@
 # gnome のショートカット設定
 
-ref: https://askubuntu.om/questions/26056/where-are-gnome-keyboard-shortcuts-stored
+ref: https://askubuntu.com/questions/26056/where-are-gnome-keyboard-shortcuts-stored
 
 ### Export
 
