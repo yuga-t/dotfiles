@@ -1,6 +1,8 @@
 [user]
-  email = yuga-t@users.noreply.github.com
   name = yuga-t
+  # email はマシン毎の ~/.gitconfig.local で設定する
+  # [user]
+  #   email = your@email.example
 
 [core]
   editor = vim

@@ -48,6 +48,13 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 | VSCode 設定 | `~/.config/Code/User/settings.json`(生成物) | `~/.config/Code/User/settings.local.json` |
 | VSCode キーバインド | `~/.config/Code/User/keybindings.json`(生成物) | `~/.config/Code/User/keybindings.local.json` |
 
+`~/.gitconfig` には `user.email` を書かない。マシン毎に `~/.gitconfig.local` で設定する:
+
+```ini
+[user]
+  email = your@email.example
+```
+
 ### VSCode について
 
 VSCodeの `settings.json` / `keybindings.json` は**シンボリックリンクではなく実ファイル**として `link.sh` が生成する。
