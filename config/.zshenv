@@ -37,3 +37,12 @@ fi
 if [ -f "/usr/bin/adb" ]; then
     export ADB=/usr/bin/adb
 fi
+
+# bun
+if [ -d "$HOME/.bun" ] && [ -d "$HOME/.bun/bin" ]; then
+    export BUN_INSTALL="$HOME/.bun"
+    export PATH="$BUN_INSTALL/bin:$PATH"
+fi
+
+# bun completions
+[ -s "/home/yuga/.bun/_bun" ] && source "/home/yuga/.bun/_bun"

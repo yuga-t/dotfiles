@@ -115,8 +115,10 @@ let mapleader = "\<space>"
 call plug#begin()
   Plug 'vim-airline/vim-airline'
 
-  Plug 'preservim/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
+  Plug 'lambdalisue/vim-fern'
+  Plug 'lambdalisue/fern-hijack.vim'
+  Plug 'lambdalisue/fern-git-status.vim'
+  Plug 'lambdalisue/fern-mapping-project-top.vim'
 
   Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
   Plug 'junegunn/fzf.vim'
@@ -134,14 +136,83 @@ call plug#begin()
 call plug#end()
 
 "
-" nerdtree
+" fern
 "
 
-nnoremap <silent> <leader>nt :NERDTreeToggle<CR>
-nnoremap <silent> <leader>nf :NERDTreeFind<CR>
+" 隠しファイルを表示
+let g:fern#default_hidden = 1
 
-" ドットファイルを表示
-let NERDTreeShowHidden=1
+" fernを開く
+nnoremap <silent> <Leader>ee :<C-u>Fern <C-r>=<SID>smart_path()<CR><CR>
+
+" Return a parent directory of the current buffer when the buffer is a file.
+" Otherwise it returns a current working directory.
+function! s:smart_path() abort
+  if !empty(&buftype) || bufname('%') =~# '^[^:]\+://'
+    return fnamemodify('.', ':p')
+  endif
+  return fnamemodify(expand('%'), ':p:h')
+endfunction
+
+" fern初期化
+function! s:init_fern() abort
+  echo "This function is called ON a fern buffer WHEN initialized"
+
+  nmap <buffer> o <Plug>(fern-action-open:edit)
+  nmap <buffer> go <Plug>(fern-action-open:edit)<C-w>p
+  nmap <buffer> t <Plug>(fern-action-open:tabedit)
+  nmap <buffer> T <Plug>(fern-action-open:tabedit)gT
+
+  " oでもenterできる
+  nmap <buffer> C <Plug>(fern-action-enter)
+  nmap <buffer> u <Plug>(fern-action-leave)
+
+  nmap <buffer> q :<C-u>quit<CR>
+
+  " Perform tcd on the root node after enter or leave action
+  nmap <buffer> <Plug>(fern-my-enter-and-tcd)
+      \ <Plug>(fern-action-enter)
+      \ <Plug>(fern-wait)
+      \ <Plug>(fern-action-tcd:root)
+
+  nmap <buffer> <Plug>(fern-my-leave-and-tcd)
+      \ <Plug>(fern-action-leave)
+      \ <Plug>(fern-wait)
+      \ <Plug>(fern-action-tcd:root)
+
+  " Perform tcd on the root node on BufEnter autocmd
+  augroup my_fern_tcd
+    autocmd! * <buffer>
+    autocmd BufEnter <buffer> call feedkeys("\<Plug>(fern-action-tcd:root)")
+  augroup END
+
+  " Find and enter project root
+  nnoremap <buffer><silent>
+        \ <Plug>(fern-my-enter-project-root)
+        \ :<C-u>call fern#helper#call(funcref('<SID>map_enter_project_root'))<CR>
+  nmap <buffer><expr><silent>
+        \ ^
+        \ fern#smart#scheme(
+        \   "^",
+        \   {
+        \     'file': "\<Plug>(fern-my-enter-project-root)",
+        \   }
+        \ )
+
+endfunction
+
+augroup fern-custom
+  autocmd! *
+  autocmd FileType fern call s:init_fern()
+augroup END
+
+function! s:map_enter_project_root(helper) abort
+  " NOTE: require 'file' scheme
+  let root = a:helper.sync.get_root_node()
+  let path = root._path
+  let path = finddir('.git/..', path . ';')
+  execute printf('Fern %s', fnameescape(path))
+endfunction
 
 "
 " fzf
@@ -249,5 +320,3 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nnoremap <silent><nowait><expr> <C-j> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-j>"
 nnoremap <silent><nowait><expr> <C-k> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-k>"
 
-" ref: https://github.com/neoclide/coc.nvim/issues/3473#issuecomment-974748337
-autocmd VimEnter,ColorScheme * hi! link CocFloating CocHintFloat
