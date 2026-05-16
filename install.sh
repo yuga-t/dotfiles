@@ -24,7 +24,7 @@ fi
 
 echo "[INFO] Debian based Linux detected"
 $SUDO apt update
-$SUDO apt install -y git
+$SUDO apt install -y git python3
 
 if [ ! -d "$DOTFILES_DIR" ]; then
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"

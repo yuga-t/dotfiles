@@ -1,0 +1,23 @@
+#
+# Test image for link.sh.
+#
+# 本番用の Dockerfile は install.sh をリモートから取得するので、ローカル変更を
+# 検証できない。このイメージは現在のワーキングツリーをコピーし、link.sh + ローカル
+# オーバーライド機構の挙動を検証する。
+#
+
+FROM ubuntu:latest
+
+RUN apt update && apt install -y sudo curl zsh vim tmux git python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN useradd -m tester \
+    && echo "tester ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+USER tester
+ENV HOME=/home/tester
+WORKDIR $HOME
+
+COPY --chown=tester:tester . $HOME/dotfiles
+
+CMD ["bash", "/home/tester/dotfiles/scripts/run-link-tests.sh"]
