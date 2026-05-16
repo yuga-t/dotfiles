@@ -30,40 +30,43 @@ has() {
 # alias
 #
 
-# brightness
+# brightness / contrast (DDC VCP code: 10=luminance, 12=contrast)
 
 detect_monitors() {
   ddcutil detect --terse | grep Monitor: | sed -e 's/.*:.*:.*://'
 }
 
-# usage: setvcp_all <new-value>
+# usage: setvcp_all <vcp-code> <value>
 setvcp_all() {
+  local vcp=$1 value=$2
   local monitor_serials=($(detect_monitors))
   for serial_num in $monitor_serials; do
-    ddcutil --sn $serial_num setvcp 10 $1
+    ddcutil --sn $serial_num setvcp $vcp $value
   done
 }
 
-setvcp_up_all() {
-    local monitor_serials=($(detect_monitors))
+# usage: setvcp_step_all <vcp-code> <+|-> <step>
+setvcp_step_all() {
+  local vcp=$1 sign=$2 step=$3
+  local monitor_serials=($(detect_monitors))
   for serial_num in $monitor_serials; do
-    ddcutil --sn $serial_num setvcp 10 + 7
-  done
-}
-
-setvcp_down_all() {
-    local monitor_serials=($(detect_monitors))
-  for serial_num in $monitor_serials; do
-    ddcutil --sn $serial_num setvcp 10 - 7
+    ddcutil --sn $serial_num setvcp $vcp $sign $step
   done
 }
 
 if has "ddcutil"; then
-  alias bup="setvcp_up_all"
-  alias bdown="setvcp_down_all"
-  alias bmax="setvcp_all 100"
-  alias bmed="setvcp_all 50"
-  alias bmin="setvcp_all 0"
+  # brightness
+  alias bup="setvcp_step_all 10 + 7"
+  alias bdown="setvcp_step_all 10 - 7"
+  alias bmax="setvcp_all 10 100"
+  alias bmed="setvcp_all 10 50"
+  alias bmin="setvcp_all 10 0"
+  # contrast
+  alias cup="setvcp_step_all 12 + 7"
+  alias cdown="setvcp_step_all 12 - 7"
+  alias cmax="setvcp_all 12 100"
+  alias cmed="setvcp_all 12 50"
+  alias cmin="setvcp_all 12 0"
 fi
 
 # night light
