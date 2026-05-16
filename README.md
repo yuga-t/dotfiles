@@ -14,10 +14,25 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 
 `install.sh` はブートストラップ専用。内部で以下を呼び出す。
 
-- `link.sh` — `config/` 配下を `$HOME` にシンボリックリンク（既存ファイルはタイムスタンプ付きでバックアップ）
+- `link.sh` — `config/` 配下を `$HOME` にシンボリックリンク（VSCode 設定だけは実ファイルとしてマージ生成）
 - `packages.sh` — apt/curl でパッケージインストール
 
-各スクリプトは単独でも実行できる。設定ファイルの差分を反映したいだけなら `./link.sh` を再実行すればよい。
+各スクリプトは単独でも実行できる。
+
+### 再実行時の挙動
+
+| スクリプト | 再実行できるか | 何が起きるか |
+|---|---|---|
+| `install.sh` | ◯ | git の `pull` + `link.sh` + `packages.sh` を順に再実行 |
+| `link.sh` | ◯ (idempotent) | 変化のないファイルはスキップ。差分があるものだけバックアップ + 更新 |
+| `packages.sh` | △ | apt は冪等。curl 経由（starship/nvm/atuin/yazi 等）は再ダウンロード・再インストールされる |
+
+`link.sh` のファイル別ルール:
+
+- **シンボリックリンク**: 既に正しい場所を指していれば `[SKIP]`。違う場所を指している/通常ファイルだった場合は `[BAK ]` で `.bak-<ナノ秒つきUTC ISO8601>` に退避してから新規リンク
+- **VSCode 生成ファイル**: ベース + ローカルからマージ結果を一時ファイルへ作り、現状と `cmp` で比較。同じなら `[SKIP]`、違うなら同様にバックアップして置換
+
+つまり「設定ファイルの差分を反映したいだけ」なら `./link.sh` を何度叩いても安全で、不要な `.bak-...` は増えない。
 
 ## Local override
 
@@ -30,21 +45,21 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 | tmux | `~/.tmux.conf` | `~/.tmux.conf.local` |
 | vim | `~/.vimrc` | `~/.vimrc.local` |
 | git | `~/.gitconfig` | `~/.gitconfig.local` |
-| VSCode 設定 | `~/.config/Code/User/settings.json`(生成物) | `~/.vscode-settings.local.json` |
-| VSCode キーバインド | `~/.config/Code/User/keybindings.json`(生成物) | `~/.vscode-keybindings.local.json` |
+| VSCode 設定 | `~/.config/Code/User/settings.json`(生成物) | `~/.config/Code/User/settings.local.json` |
+| VSCode キーバインド | `~/.config/Code/User/keybindings.json`(生成物) | `~/.config/Code/User/keybindings.local.json` |
 
 ### VSCode について
 
 VSCodeの `settings.json` / `keybindings.json` は**シンボリックリンクではなく実ファイル**として `link.sh` が生成する。
 
 - ベース: `config/.config/Code/User/{settings,keybindings}.json`（git管理）
-- ローカル: `~/.vscode-{settings,keybindings}.local.json`（git管理外）
+- ローカル: `~/.config/Code/User/{settings,keybindings}.local.json`（git管理外）
 - 生成物: `~/.config/Code/User/{settings,keybindings}.json`
 - マージ規則:
   - settings: dictのディープマージ（ローカル優先）
   - keybindings: arrayのconcat（ローカルを末尾に追加。VSCodeは後勝ち）
 
-VSCode上で設定を編集すると実ファイルへ反映されるが、**`./link.sh` を再実行すると上書きされる**（旧ファイルは`.bak-...`として残る）。コミットしたい変更は手動で `config/.config/Code/User/settings.json` に反映すること。
+VSCode上で設定を編集すると実ファイルへ反映されるが、**`./link.sh` を再実行するとベース＋ローカルのマージ結果で上書きされる**。VSCode UI で加えた変更が `~/.config/Code/User/*.local.json` にも `config/...settings.json` にも入っていない場合、その変更は失われる（旧ファイルは `.bak-...` として残るので復元可能）。コミットしたい変更は手動で `config/.config/Code/User/settings.json` に、マシン固有の変更は `~/.config/Code/User/settings.local.json` に反映するワークフローが基本。
 
 ## Test
 

@@ -112,7 +112,7 @@ fi
 
 echo
 echo '=== VSCode merge: settings.json ==='
-cat > "$HOME/.vscode-settings.local.json" <<'JSON'
+cat > "$HOME/.config/Code/User/settings.local.json" <<'JSON'
 {
   "editor.fontSize": 99,
   "workbench.colorCustomizations": {
@@ -130,7 +130,7 @@ assert_eq 'settings nested untouched key kept'     "$(read_json 'd["workbench.co
 
 echo
 echo '=== VSCode merge: keybindings.json (concat) ==='
-cat > "$HOME/.vscode-keybindings.local.json" <<'JSON'
+cat > "$HOME/.config/Code/User/keybindings.local.json" <<'JSON'
 [
   { "key": "ctrl+shift+x", "command": "marker.local" }
 ]
@@ -142,6 +142,52 @@ bindings = json.load(open('$HOME/.config/Code/User/keybindings.json'))
 print('yes' if any(b.get('command') == 'marker.local' for b in bindings) else 'no')
 ")
 assert_eq 'keybindings local entry appended' "$found" 'yes'
+
+echo
+echo '=== Idempotency: link.sh second run produces no new .bak files ==='
+bak_before=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
+bash "$DOTFILES_DIR/link.sh" > /tmp/link_second_run.log 2>&1 || true
+bak_after=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
+assert_eq 'no new backup files on re-run' "$bak_after" "$bak_before"
+if grep -q '\[BAK \]' /tmp/link_second_run.log; then
+    ng 're-run created backups: '"$(grep -c '\[BAK \]' /tmp/link_second_run.log)"' lines'
+else
+    ok 're-run did not create any backups'
+fi
+if grep -q '\[SKIP\]' /tmp/link_second_run.log; then
+    ok 're-run logged SKIP for unchanged files'
+else
+    ng 're-run did not log SKIP'
+fi
+
+echo
+echo '=== Idempotency: change content -> only the changed file is backed up ==='
+# zshrc.local を更新（symlinkのターゲット変更ではないので、symlinkは触らない）
+# 代わりに、外から ~/.zshrc を別物に上書きするケースをシミュレート
+rm -f "$HOME/.zshrc"
+echo '# stale content' > "$HOME/.zshrc"
+bak_before=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
+bash "$DOTFILES_DIR/link.sh" > /tmp/link_third_run.log 2>&1
+bak_after=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
+diff=$((bak_after - bak_before))
+assert_eq 'exactly 1 new backup when 1 file is stale' "$diff" '1'
+[ -L "$HOME/.zshrc" ] && ok '.zshrc restored as symlink' || ng '.zshrc not restored'
+
+echo
+echo '=== Idempotency: VSCode merged file - changing .local triggers regen ==='
+# 上記.zshrcの再リンクで .bak が1個増えてる
+bak_before=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
+cat > "$HOME/.config/Code/User/settings.local.json" <<'JSON'
+{ "editor.fontSize": 11 }
+JSON
+bash "$DOTFILES_DIR/link.sh" > /tmp/link_fourth_run.log 2>&1
+bak_after=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
+font=$(python3 -c "import json;print(json.load(open('$HOME/.config/Code/User/settings.json'))['editor.fontSize'])")
+assert_eq 'settings regenerated with new local'  "$font" '11'
+diff=$((bak_after - bak_before))
+# settings.json と keybindings.json で内容が変わるのは settings.json のみのはず
+# keybindings の .local は変えていないのでスキップされる
+assert_eq 'exactly 1 VSCode backup created'  "$diff" '1'
 
 echo
 echo "=== Result: PASS=$PASS FAIL=$FAIL ==="
