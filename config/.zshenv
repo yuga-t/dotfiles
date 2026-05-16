@@ -45,4 +45,7 @@ if [ -d "$HOME/.bun" ] && [ -d "$HOME/.bun/bin" ]; then
 fi
 
 # bun completions
-[ -s "/home/yuga/.bun/_bun" ] && source "/home/yuga/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+# local override
+[ -f "$HOME/.zshenv.local" ] && source "$HOME/.zshenv.local"

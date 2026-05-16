@@ -1,0 +1,29 @@
+# フォント
+font-family = Cica
+font-size = 18
+
+# ベル無効化（WezTermのaudible_bell='Disabled'相当）
+# GTKデフォルトの注意要求・タイトル絵文字も含めて全部オフ
+bell-features = no-audio,no-system,no-attention,no-title
+
+# キーバインド
+# Ctrl+左矢印 → 前の単語へ（Alt+b = ESC b）
+keybind = ctrl+left=esc:b
+# Ctrl+右矢印 → 次の単語へ（Alt+f = ESC f）
+keybind = ctrl+right=esc:f
+# Ctrl+Backspace → 前の単語を削除（Ctrl+W = 0x17）
+keybind = ctrl+backspace=text:\x17
+# Shift+Enter → 改行送信（Claude Code用）
+keybind = shift+enter=text:\n
+# JIS配列向け：実際に「+」を入力するキーをバインド
+keybind = ctrl+semicolon=increase_font_size:1
+keybind = ctrl+shift+semicolon=increase_font_size:1
+
+# ウィンドウを最大化して起動
+# ※ Linux/Wayland環境では起動時に効かないことがある既知のバグあり（issue #11252）。
+#   その場合はウィンドウマネージャ側で対応するか、起動直後に toggle_maximize を送る。
+# maximize = true
+
+# maximizeが効かないため
+window-height = 9999
+window-width = 9999

@@ -81,14 +81,6 @@ else
     echo "xsel NOT exist!"
 fi
 
-# bat
-if has "bat"; then
-  alias cat="bat --paging=never"
-  alias less="bat"
-else
-  echo "bat NOT exist!"
-fi
-
 #
 # others
 #
@@ -114,3 +106,9 @@ fi
 #
 
 eval "$(sheldon source)"
+
+#
+# local override
+#
+
+[ -f "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
