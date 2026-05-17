@@ -123,14 +123,14 @@ else
 fi
 
 #
-# fnm (Node version manager, faster than nvm)
+# mise (universal version manager for Node/Python/Go/etc.)
+# Node や pnpm のバージョンは `mise use --global node@lts pnpm@latest` などで管理する
 #
 
-if ! has fnm; then
-    curl -fsSL https://fnm.vercel.app/install \
-        | bash -s -- --skip-shell --install-dir "$HOME/.local/share/fnm"
+if ! has mise; then
+    curl -fsSL https://mise.run | sh
 else
-    echo "[SKIP] fnm already installed"
+    echo "[SKIP] mise already installed"
 fi
 
 #
