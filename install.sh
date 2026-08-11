@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Bootstrap entry point: ensure Devbox, clone this repository, then run link.sh and packages.sh.
+# Bootstrap entry point: ensure git, clone this repository, then run link.sh and packages.sh.
 # 通常はリモートから `curl -fsSL ...install.sh | bash` で実行する想定。
 # 既にローカルにdotfilesがあるなら ./link.sh と ./packages.sh を直接実行してもよい。
 #
@@ -42,13 +42,6 @@ fi
 $SUDO apt update
 $SUDO apt install -y git
 
-if ! command -v devbox >/dev/null 2>&1; then
-    echo "[INFO] Installing Devbox"
-    curl -fsSL https://get.jetify.com/devbox | bash
-fi
-
-export PATH="$HOME/.local/bin:$PATH"
-
 if [ ! -d "$DOTFILES_DIR" ]; then
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
 else
@@ -60,9 +53,6 @@ else
 fi
 
 echo "[INFO] Repository ready at $DOTFILES_DIR"
-
-devbox global pull "$DOTFILES_DIR/devbox-global.json"
-eval "$(devbox global shellenv)"
 
 bash "$DOTFILES_DIR/link.sh"
 bash "$DOTFILES_DIR/packages.sh"

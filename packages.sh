@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Install packages.
+# Install Devbox and packages.
 # Debian based Linux only.
 #
 # 二度目以降の実行も安全: バイナリが既に存在するならその手順をスキップする。
@@ -30,6 +30,17 @@ if ! command -v curl >/dev/null 2>&1; then
     $SUDO apt update
     $SUDO apt install -y curl
 fi
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if ! command -v devbox >/dev/null 2>&1; then
+    echo "[INFO] Installing Devbox"
+    curl -fsSL https://get.jetify.com/devbox | bash
+fi
+
+export PATH="$HOME/.local/bin:$PATH"
+devbox global pull "$SCRIPT_DIR/devbox-global.json"
+eval "$(devbox global shellenv)"
 
 mkdir -p "$HOME/.local/bin"
 

@@ -12,10 +12,10 @@
 curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 ```
 
-`install.sh` は Devbox の導入とブートストラップを行う。内部で以下を呼び出す。
+`install.sh` は Git の導入とブートストラップを行う。内部で以下を呼び出す。
 
 - `link.sh` — `config/` 配下を `$HOME` にシンボリックリンク
-- `packages.sh` — apt/curl でパッケージインストール
+- `packages.sh` — Devbox の導入、Devbox パッケージ、apt/curl でホスト依存パッケージをインストール
 
 各スクリプトは単独でも実行できる。
 
@@ -71,7 +71,7 @@ CLI ツールは [`devbox-global.json`](devbox-global.json) を正本として�
 devbox global pull ./devbox-global.json
 ```
 
-`install.sh` は clone に必要な Git を apt で導入した後、チェックアウト済みの `devbox-global.json` を pull する。
+`install.sh` は clone に必要な Git を apt で導入する。Devbox と `devbox-global.json` の反映は、clone 後に `packages.sh` が行う。
 
 `~/.zshrc` は `devbox global shellenv` を評価するため、以後の zsh では `devbox shell` なしで利用できる。パッケージの解決結果は Devbox のグローバル環境側で保持される。
 
