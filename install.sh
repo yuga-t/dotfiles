@@ -12,8 +12,8 @@ if [ "$DEBUG" = "true" ]; then
     set -x
 fi
 
-DOTFILES_REPO="https://github.com/yuga-t/dotfiles.git"
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/yuga-t/dotfiles.git}"
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
 
 if type sudo >/dev/null 2>&1 && [ "$(whoami)" != "root" ]; then
     SUDO="sudo"
@@ -43,7 +43,11 @@ else
         echo "[ERROR] $DOTFILES_DIR exists but is not a Git repository"
         exit 1
     fi
-    git -C "$DOTFILES_DIR" pull
+    if [ "${SKIP_GIT_PULL:-false}" = "true" ]; then
+        echo "[INFO] Skipping Git pull"
+    else
+        git -C "$DOTFILES_DIR" pull
+    fi
 fi
 
 echo "[INFO] Repository ready at $DOTFILES_DIR"

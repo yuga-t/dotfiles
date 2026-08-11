@@ -24,7 +24,7 @@ plugins=(
 
 # Devbox global packages
 if command -v devbox >/dev/null 2>&1; then
-  eval "$(devbox global shellenv)"
+  eval "$(devbox global shellenv --init-hook)"
 fi
 
 has() {

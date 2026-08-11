@@ -1,0 +1,27 @@
+{
+  "packages": [
+    "atuin",
+    "bat",
+    "delta",
+    "eza",
+    "fd",
+    "ffmpeg",
+    "ffmpegthumbnailer",
+    "fzf",
+    "herdr",
+    "hunk",
+    "imagemagick",
+    "jq",
+    "p7zip",
+    "poppler_utils",
+    "python3",
+    "ripgrep",
+    "sheldon",
+    "starship",
+    "universal-ctags",
+    "unzip",
+    "vim",
+    "yazi",
+    "zsh"
+  ]
+}

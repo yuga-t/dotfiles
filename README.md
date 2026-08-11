@@ -55,25 +55,25 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 
 ## Test
 
-`link.sh` の動作と各種ローカルオーバーライドの仕組みを Docker で検証できる:
+`install.sh` の初回セットアップを Docker で検証できる:
 
 ```bash
 ./test.sh
 ```
 
-中身は `Dockerfile` の `test` stage をビルドして `scripts/run-link-tests.sh` をコンテナ内で走らせるだけ。ネットワーク経由のパッケージインストールはテストしない（あくまで `link.sh` とローカルオーバーライドの挙動を確認する用途）。
+`Dockerfile` に現在の作業ツリーをコピーし、ローカルの `install.sh` をコンテナ内で実行する。Docker では Nix daemon を起動できないため Devbox 導入だけをスキップし、clone・link・apt・特殊インストール経路を検証する。Devbox 自体は実環境で確認する。
 
 ## Devbox
 
-CLI ツールは [`devbox-global.json`](devbox-global.json) を正本として管理する。Devbox をインストールした後、リポジトリのルートで以下を実行する:
+CLI ツールは [`devbox.json`](devbox.json) を正本として管理する。Devbox をインストールした後、リポジトリのルートで以下を実行する:
 
 ```bash
-devbox global pull ./devbox-global.json
+devbox global pull ./devbox.json
 ```
 
-`install.sh` は clone に必要な Git を apt で導入する。Devbox と `devbox-global.json` の反映は、clone 後に `packages.sh` が行う。
+`install.sh` は clone に必要な Git を apt で導入する。Devbox と `devbox.json` の反映は、clone 後に `packages.sh` が行う。
 
-`~/.zshrc` は `devbox global shellenv` を評価するため、以後の zsh では `devbox shell` なしで利用できる。パッケージの解決結果は Devbox のグローバル環境側で保持される。
+`~/.zshrc` は `devbox global shellenv --init-hook` を評価するため、以後の zsh では `devbox shell` なしで利用できる。パッケージの解決結果は Devbox のグローバル環境側で保持される。
 
 `fcitx5`、`fcitx5-mozc`、`ddcutil`、`wl-clipboard` など、デスクトップ環境やホスト固有の機能に依存するものは引き続き apt で管理する。`herdr` と `hunk` も Devbox で管理する。
 
