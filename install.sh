@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Bootstrap entry point: ensure git, clone this repository, then run link.sh and packages.sh.
+# Bootstrap entry point: ensure Devbox, clone this repository, then run link.sh and packages.sh.
 # 通常はリモートから `curl -fsSL ...install.sh | bash` で実行する想定。
 # 既にローカルにdotfilesがあるなら ./link.sh と ./packages.sh を直接実行してもよい。
 #
@@ -13,9 +13,8 @@ if [ "$DEBUG" = "true" ]; then
 fi
 
 DOTFILES_REPO="https://github.com/yuga-t/dotfiles.git"
+DEVBOX_GLOBAL_URL="https://raw.githubusercontent.com/yuga-t/dotfiles/main/devbox-global.json"
 DOTFILES_DIR="$HOME/dotfiles"
-
-type sudo >/dev/null 2>&1 && [ "$(whoami)" != "root" ] && SUDO="sudo" || SUDO=""
 
 if [ ! -f /etc/debian_version ]; then
     echo "[ERROR] This script only supports Debian based Linux"
@@ -23,8 +22,17 @@ if [ ! -f /etc/debian_version ]; then
 fi
 
 echo "[INFO] Debian based Linux detected"
-$SUDO apt update
-$SUDO apt install -y git python3
+
+if ! command -v devbox >/dev/null 2>&1; then
+    echo "[INFO] Installing Devbox"
+    curl -fsSL https://get.jetify.com/devbox | bash
+fi
+
+export PATH="$HOME/.local/bin:$PATH"
+
+# Pull the global manifest before cloning so git itself comes from Devbox.
+devbox global pull "$DEVBOX_GLOBAL_URL"
+eval "$(devbox global shellenv)"
 
 if [ ! -d "$DOTFILES_DIR" ]; then
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
@@ -33,6 +41,10 @@ else
 fi
 
 echo "[INFO] Repository ready at $DOTFILES_DIR"
+
+# Prefer the manifest from the checked-out repository after the initial bootstrap.
+devbox global pull "$DOTFILES_DIR/devbox-global.json"
+eval "$(devbox global shellenv)"
 
 bash "$DOTFILES_DIR/link.sh"
 bash "$DOTFILES_DIR/packages.sh"
