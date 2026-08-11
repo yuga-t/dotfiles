@@ -13,7 +13,6 @@ if [ "$DEBUG" = "true" ]; then
 fi
 
 DOTFILES_REPO="https://github.com/yuga-t/dotfiles.git"
-DEVBOX_GLOBAL_URL="https://raw.githubusercontent.com/yuga-t/dotfiles/main/devbox-global.json"
 DOTFILES_DIR="$HOME/dotfiles"
 
 if type sudo >/dev/null 2>&1 && [ "$(whoami)" != "root" ]; then
@@ -40,16 +39,15 @@ if ! command -v curl >/dev/null 2>&1; then
     $SUDO apt install -y curl
 fi
 
+$SUDO apt update
+$SUDO apt install -y git
+
 if ! command -v devbox >/dev/null 2>&1; then
     echo "[INFO] Installing Devbox"
     curl -fsSL https://get.jetify.com/devbox | bash
 fi
 
 export PATH="$HOME/.local/bin:$PATH"
-
-# Pull the global manifest before cloning so git itself comes from Devbox.
-devbox global pull "$DEVBOX_GLOBAL_URL"
-eval "$(devbox global shellenv)"
 
 if [ ! -d "$DOTFILES_DIR" ]; then
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
@@ -62,6 +60,9 @@ else
 fi
 
 echo "[INFO] Repository ready at $DOTFILES_DIR"
+
+devbox global pull "$DOTFILES_DIR/devbox-global.json"
+eval "$(devbox global shellenv)"
 
 bash "$DOTFILES_DIR/link.sh"
 bash "$DOTFILES_DIR/packages.sh"

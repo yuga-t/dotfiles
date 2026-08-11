@@ -2,13 +2,11 @@
   "packages": [
     "atuin@latest",
     "bat@latest",
-    "curl@latest",
     "eza@latest",
     "fd@latest",
     "ffmpeg@latest",
     "ffmpegthumbnailer@latest",
     "fzf@latest",
-    "git@latest",
     "git-delta@latest",
     "herdr@latest",
     "hunk@latest",
