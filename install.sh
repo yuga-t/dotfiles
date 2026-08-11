@@ -48,7 +48,9 @@ prepare_repository() {
     if [ "${SKIP_GIT_PULL:-false}" = "true" ]; then
         echo "[INFO] Skipping Git pull"
     else
-        git -C "$DOTFILES_DIR" pull
+        [ -z "$(git -C "$DOTFILES_DIR" status --porcelain)" ] \
+            || die "$DOTFILES_DIR has local changes; commit or stash them before installing"
+        git -C "$DOTFILES_DIR" pull --ff-only
     fi
 }
 

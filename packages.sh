@@ -81,7 +81,10 @@ install_vim_plug() {
 }
 
 install_cica_fonts() {
-    if [ -d /usr/local/share/fonts/Cica ]; then
+    local cica_dir=/usr/local/share/fonts/Cica
+    local cica_marker="$cica_dir/.installed"
+
+    if [ -f "$cica_marker" ]; then
         echo "[SKIP] Cica fonts already installed"
         return
     fi
@@ -92,9 +95,10 @@ install_cica_fonts() {
     curl -fsSL -o "$cica_tmp/Cica.zip" \
         https://github.com/miiton/Cica/releases/download/v5.0.3/Cica_v5.0.3.zip
     unzip -q "$cica_tmp/Cica.zip" -d "$cica_tmp"
-    $SUDO mkdir -p /usr/local/share/fonts/Cica
-    $SUDO cp "$cica_tmp"/Cica-*.ttf /usr/local/share/fonts/Cica
+    $SUDO mkdir -p "$cica_dir"
+    $SUDO cp "$cica_tmp"/Cica-*.ttf "$cica_dir"
     $SUDO fc-cache -fv
+    $SUDO touch "$cica_marker"
     rm -rf "$cica_tmp"
     cica_tmp=""
     echo "[INFO] Cica fonts installed"
