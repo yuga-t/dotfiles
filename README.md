@@ -75,7 +75,7 @@ CLI ツールは `packages.sh` から `devbox global add` で導入する。Devb
 
 `~/.zshrc` は `devbox global shellenv` を評価するため、以後の zsh では `devbox shell` なしで利用できる。パッケージの解決結果は Devbox のグローバル環境側で保持される。
 
-`fcitx5`、`fcitx5-mozc`、`ddcutil`、`wl-clipboard` など、デスクトップ環境やホスト固有の機能に依存するものは引き続き apt で管理する。`herdr` と `hunk` も Devbox で管理する。
+`zsh` と `vim`、`fcitx5`、`fcitx5-mozc`、`ddcutil`、`wl-clipboard` など、デスクトップ環境やホスト固有の機能に依存するものは apt で管理する。`herdr` と `hunk` も Devbox で管理する。
 
 ## Tips
 

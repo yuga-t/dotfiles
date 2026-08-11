@@ -56,7 +56,7 @@ install_devbox_packages() {
     local packages=(
         atuin bat delta eza fd ffmpeg ffmpegthumbnailer fzf git-lfs
         herdr hunk imagemagick jq p7zip poppler_utils python3 ripgrep
-        sheldon starship universal-ctags unzip vim yazi zsh
+        sheldon starship universal-ctags unzip yazi
     )
     devbox global add "${packages[@]}"
     eval "$(devbox global shellenv --preserve-path-stack -r)"
@@ -65,7 +65,7 @@ install_devbox_packages() {
 
 install_apt_packages() {
     local packages=(
-        xsel wl-clipboard ddcutil fcitx5 fcitx5-mozc unzip fontconfig
+        xsel wl-clipboard ddcutil fcitx5 fcitx5-mozc fontconfig unzip vim zsh
     )
     apt_cmd update
     apt_cmd install -y "${packages[@]}"
