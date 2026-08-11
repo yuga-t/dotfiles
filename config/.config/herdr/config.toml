@@ -1,0 +1,10 @@
+onboarding = false
+
+[ui]
+agent_panel_sort = "priority"
+
+[keys]
+split_vertical = ["prefix+|", "prefix+v"]
+detach = ["prefix+d", "prefix+q"]
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
