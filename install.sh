@@ -63,10 +63,6 @@ fi
 
 echo "[INFO] Repository ready at $DOTFILES_DIR"
 
-# Prefer the manifest from the checked-out repository after the initial bootstrap.
-devbox global pull "$DOTFILES_DIR/devbox-global.json"
-eval "$(devbox global shellenv)"
-
 bash "$DOTFILES_DIR/link.sh"
 bash "$DOTFILES_DIR/packages.sh"
 

@@ -71,7 +71,7 @@ CLI ツールは [`devbox-global.json`](devbox-global.json) を正本として�
 devbox global pull ./devbox-global.json
 ```
 
-`install.sh` は clone 前に GitHub 上の `devbox-global.json` を pull するため、Git も Devbox から提供される。これにより、`install.sh` とグローバルパッケージ定義で Git を二重管理しない。
+`install.sh` は clone 前に GitHub 上の `devbox-global.json` を1回 pull するため、Git も Devbox から提供される。これにより、`install.sh` とグローバルパッケージ定義で Git を二重管理しない。
 
 `~/.zshrc` は `devbox global shellenv` を評価するため、以後の zsh では `devbox shell` なしで利用できる。パッケージの解決結果は Devbox のグローバル環境側で保持される。
 
