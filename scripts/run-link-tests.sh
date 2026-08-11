@@ -4,8 +4,6 @@
 # ホストで直接実行すると既存の dotfiles を書き換える可能性があるので、
 # 通常は ./test.sh から呼ぶこと。
 #
-# shellcheck disable=SC2015  # A && B || C パターン: B(=ok) は常に0返すので安全
-
 set -eu -o pipefail
 
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
@@ -41,7 +39,6 @@ expect_symlink() {
 expect_symlink .zshrc
 expect_symlink .zshenv
 expect_symlink .vimrc
-expect_symlink .tmux.conf
 expect_symlink .gitconfig
 expect_symlink .config/ghostty/config.ghostty
 expect_symlink .config/fcitx5/config
@@ -83,16 +80,6 @@ echo
 echo '=== Local override: .gitconfig.local ==='
 printf '[user]\n  name = override-user\n' > "$HOME/.gitconfig.local"
 assert_eq '.gitconfig.local picked up' "$(git config user.name)" 'override-user'
-
-echo
-echo '=== Local override: .tmux.conf.local ==='
-echo 'set -g @custom_marker localok' > "$HOME/.tmux.conf.local"
-mkdir -p "$HOME/.tmux/plugins/tpm"
-printf '#!/bin/sh\nexit 0\n' > "$HOME/.tmux/plugins/tpm/tpm"
-chmod +x "$HOME/.tmux/plugins/tpm/tpm"
-marker=$(tmux -L "test_$$" -f "$HOME/.tmux.conf" new-session -d 'sleep 5' \; show-options -g -v @custom_marker 2>&1 || true)
-tmux -L "test_$$" kill-server 2>/dev/null || true
-assert_eq '.tmux.conf.local picked up' "$marker" 'localok'
 
 echo
 echo '=== Local override: .vimrc.local ==='

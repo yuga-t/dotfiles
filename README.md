@@ -42,7 +42,6 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 |---|---|---|
 | zsh env | `~/.zshenv` | `~/.zshenv.local` |
 | zsh rc | `~/.zshrc` | `~/.zshrc.local` |
-| tmux | `~/.tmux.conf` | `~/.tmux.conf.local` |
 | vim | `~/.vimrc` | `~/.vimrc.local` |
 | git | `~/.gitconfig` | `~/.gitconfig.local` |
 | VSCode 設定 | `~/.config/Code/User/settings.json`(生成物) | `~/.config/Code/User/settings.local.json` |

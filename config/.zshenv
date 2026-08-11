@@ -12,11 +12,6 @@ fi
 # rust
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-# mise (universal version manager)
-if [ -d "$HOME/.local/share/mise/shims" ]; then
-    export PATH="$HOME/.local/share/mise/shims:$PATH"
-fi
-
 # android studio
 if [ -d "/usr/local/android-studio/jbr" ]; then
     export JAVA_HOME=/usr/local/android-studio/jbr

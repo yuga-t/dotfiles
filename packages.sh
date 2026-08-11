@@ -33,7 +33,6 @@ $SUDO apt update
 $SUDO apt install -y \
     zsh \
     vim \
-    tmux \
     fzf \
     ripgrep \
     eza \
@@ -42,7 +41,6 @@ $SUDO apt install -y \
     wl-clipboard \
     git-delta \
     universal-ctags \
-    shellcheck \
     ddcutil \
     fcitx5 \
     fcitx5-mozc \
@@ -113,24 +111,31 @@ else
 fi
 
 #
-# tmux plugin manager
+#
+# herdr (terminal workspace manager)
 #
 
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-    git clone https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
+if ! has herdr; then
+    curl -fsSL https://herdr.dev/install.sh | sh
 else
-    echo "[SKIP] tpm already installed"
+    echo "[SKIP] herdr already installed"
 fi
 
 #
-# mise (universal version manager for Node/Python/Go/etc.)
-# Node や pnpm のバージョンは `mise use --global node@lts pnpm@latest` などで管理する
+# hunk (interactive diff viewer)
 #
 
-if ! has mise; then
-    curl -fsSL https://mise.run | sh
+if ! has hunk; then
+    hunk_tag=$(curl -fsSL https://api.github.com/repos/modem-dev/hunk/releases/latest | jq -r .tag_name)
+    hunk_tmp=$(mktemp -d)
+    curl -fsSL -o "$hunk_tmp/hunk.tar.gz" \
+        "https://github.com/modem-dev/hunk/releases/download/${hunk_tag}/hunkdiff-linux-x64.tar.gz"
+    tar -xzf "$hunk_tmp/hunk.tar.gz" -C "$hunk_tmp"
+    install -m 0755 "$hunk_tmp/hunkdiff-linux-x64/hunk" "$HOME/.local/bin/hunk"
+    rm -rf "$hunk_tmp"
+    echo "[INFO] hunk $hunk_tag installed"
 else
-    echo "[SKIP] mise already installed"
+    echo "[SKIP] hunk already installed"
 fi
 
 #
