@@ -7,54 +7,63 @@
 
 set -eu -o pipefail
 
-DEBUG="${DEBUG:-}"
-if [ "$DEBUG" = "true" ]; then
+if [ "${DEBUG:-false}" = "true" ]; then
     set -x
 fi
 
 DOTFILES_REPO="${DOTFILES_REPO:-https://github.com/yuga-t/dotfiles.git}"
 DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
 
-if type sudo >/dev/null 2>&1 && [ "$(whoami)" != "root" ]; then
-    SUDO="sudo"
-else
-    SUDO=""
-fi
-
-if [ ! -f /etc/debian_version ]; then
-    echo "[ERROR] This script only supports Debian based Linux"
+die() {
+    echo "[ERROR] $*" >&2
     exit 1
-fi
+}
 
-echo "[INFO] Debian based Linux detected"
-
-if [ "$(whoami)" != "root" ] && [ -z "$SUDO" ]; then
-    echo "[ERROR] This script needs root or sudo for apt operations"
-    exit 1
-fi
-
-if ! command -v git >/dev/null 2>&1; then
-    $SUDO apt update
-    $SUDO apt install -y git
-fi
-
-if [ ! -d "$DOTFILES_DIR" ]; then
-    git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
-else
-    if ! git -C "$DOTFILES_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-        echo "[ERROR] $DOTFILES_DIR exists but is not a Git repository"
-        exit 1
+setup_sudo() {
+    if [ "$(id -u)" -eq 0 ]; then
+        SUDO=""
+    elif command -v sudo >/dev/null 2>&1; then
+        SUDO="sudo"
+    else
+        die "This script needs root or sudo for apt operations"
     fi
+}
+
+install_git() {
+    if ! command -v git >/dev/null 2>&1; then
+        $SUDO apt-get update
+        $SUDO apt-get install -y git
+    fi
+}
+
+prepare_repository() {
+    if [ ! -d "$DOTFILES_DIR" ]; then
+        git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
+        return
+    fi
+
+    git -C "$DOTFILES_DIR" rev-parse --is-inside-work-tree >/dev/null 2>&1 \
+        || die "$DOTFILES_DIR exists but is not a Git repository"
+
     if [ "${SKIP_GIT_PULL:-false}" = "true" ]; then
         echo "[INFO] Skipping Git pull"
     else
         git -C "$DOTFILES_DIR" pull
     fi
-fi
+}
 
-echo "[INFO] Repository ready at $DOTFILES_DIR"
+main() {
+    [ -f /etc/debian_version ] || die "This script only supports Debian based Linux"
+    setup_sudo
+    echo "[INFO] Debian based Linux detected"
+    install_git
+    prepare_repository
+    echo "[INFO] Repository ready at $DOTFILES_DIR"
 
-bash "$DOTFILES_DIR/link.sh"
-bash "$DOTFILES_DIR/packages.sh"
+    bash "$DOTFILES_DIR/link.sh"
+    bash "$DOTFILES_DIR/packages.sh"
 
-echo "[INFO] Installation finished"
+    echo "[INFO] Installation finished"
+}
+
+main "$@"

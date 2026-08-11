@@ -1,108 +1,92 @@
 #!/bin/bash
 #
-# Install Devbox and packages.
+# Install Devbox and host-dependent packages.
 # Debian based Linux only.
-#
-# 二度目以降の実行も安全: バイナリが既に存在するならその手順をスキップする。
 #
 
 set -eu -o pipefail
 
-DEBUG="${DEBUG:-}"
-if [ "$DEBUG" = "true" ]; then
+if [ "${DEBUG:-false}" = "true" ]; then
     set -x
 fi
 
-type sudo >/dev/null 2>&1 && [ "$(whoami)" != "root" ] && SUDO="sudo" || SUDO=""
-
-if [ ! -f /etc/debian_version ]; then
-    echo "[ERROR] This script only supports Debian based Linux"
+die() {
+    echo "[ERROR] $*" >&2
     exit 1
-fi
+}
 
-if [ "$(whoami)" != "root" ] && [ -z "$SUDO" ]; then
-    echo "[ERROR] This script needs root or sudo for apt and font installation"
-    exit 1
-fi
+require_debian() {
+    [ -f /etc/debian_version ] || die "This script only supports Debian based Linux"
+}
 
-if ! command -v curl >/dev/null 2>&1; then
-    echo "[INFO] Installing curl"
-    $SUDO apt update
-    $SUDO apt install -y curl
-fi
+setup_sudo() {
+    if [ "$(id -u)" -eq 0 ]; then
+        SUDO=""
+    elif command -v sudo >/dev/null 2>&1; then
+        SUDO="sudo"
+    else
+        die "This script needs root or sudo for apt and font installation"
+    fi
+}
 
-if [ "${SKIP_DEVBOX:-false}" = "true" ]; then
-    echo "[INFO] Skipping Devbox installation"
-else
+apt_cmd() {
+    $SUDO env DEBIAN_FRONTEND=noninteractive apt-get "$@"
+}
+
+ensure_curl() {
+    if ! command -v curl >/dev/null 2>&1; then
+        echo "[INFO] Installing curl"
+        apt_cmd update
+        apt_cmd install -y curl
+    fi
+}
+
+install_devbox_packages() {
+    if [ "${SKIP_DEVBOX:-false}" = "true" ]; then
+        echo "[INFO] Skipping Devbox installation"
+        return
+    fi
+
     if ! command -v devbox >/dev/null 2>&1; then
         echo "[INFO] Installing Devbox"
         curl -fsSL https://get.jetify.com/devbox | bash -s -- -f
     fi
 
     export PATH="$HOME/.local/bin:$PATH"
-    devbox_packages=(
-        atuin
-        bat
-        delta
-        eza
-        fd
-        ffmpeg
-        ffmpegthumbnailer
-        fzf
-        git-lfs
-        herdr
-        hunk
-        imagemagick
-        jq
-        p7zip
-        poppler_utils
-        python3
-        ripgrep
-        sheldon
-        starship
-        universal-ctags
-        unzip
-        vim
-        yazi
-        zsh
+    local packages=(
+        atuin bat delta eza fd ffmpeg ffmpegthumbnailer fzf git-lfs
+        herdr hunk imagemagick jq p7zip poppler_utils python3 ripgrep
+        sheldon starship universal-ctags unzip vim yazi zsh
     )
-    devbox global add "${devbox_packages[@]}"
+    devbox global add "${packages[@]}"
     eval "$(devbox global shellenv --init-hook)"
-fi
+}
 
-mkdir -p "$HOME/.local/bin"
+install_apt_packages() {
+    local packages=(
+        xsel wl-clipboard ddcutil fcitx5 fcitx5-mozc unzip fontconfig
+    )
+    apt_cmd update
+    apt_cmd install -y "${packages[@]}"
+}
 
-#
-# apt packages
-#
+install_vim_plug() {
+    if [ -f "$HOME/.vim/autoload/plug.vim" ]; then
+        echo "[SKIP] vim-plug already installed"
+        return
+    fi
 
-$SUDO apt update
-
-$SUDO apt install -y \
-    xsel \
-    wl-clipboard \
-    ddcutil \
-    fcitx5 \
-    fcitx5-mozc \
-    unzip \
-    fontconfig
-
-#
-# vim-plug
-#
-
-if [ ! -f "$HOME/.vim/autoload/plug.vim" ]; then
     curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-else
-    echo "[SKIP] vim-plug already installed"
-fi
+}
 
-#
-# Cica fonts
-#
+install_cica_fonts() {
+    if [ -d /usr/local/share/fonts/Cica ]; then
+        echo "[SKIP] Cica fonts already installed"
+        return
+    fi
 
-if [ ! -d /usr/local/share/fonts/Cica ]; then
+    local cica_tmp
     cica_tmp=$(mktemp -d)
     trap '[ -z "${cica_tmp:-}" ] || rm -rf "$cica_tmp"' EXIT
     curl -fsSL -o "$cica_tmp/Cica.zip" \
@@ -114,8 +98,18 @@ if [ ! -d /usr/local/share/fonts/Cica ]; then
     rm -rf "$cica_tmp"
     cica_tmp=""
     echo "[INFO] Cica fonts installed"
-else
-    echo "[SKIP] Cica fonts already installed"
-fi
+}
 
-echo "[INFO] Packages installed"
+main() {
+    require_debian
+    setup_sudo
+    ensure_curl
+    mkdir -p "$HOME/.local/bin"
+    install_devbox_packages
+    install_apt_packages
+    install_vim_plug
+    install_cica_fonts
+    echo "[INFO] Packages installed"
+}
+
+main "$@"
