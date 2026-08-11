@@ -73,7 +73,7 @@ CLI ツールは `packages.sh` から `devbox global add` で導入する。Devb
 
 `install.sh` は clone に必要な Git を apt で導入する。`packages.sh` は Devbox の未導入パッケージを追加するだけなので、手動で試しているグローバルパッケージを上書きで削除しない。
 
-`~/.zshrc` は `devbox global shellenv --init-hook` を評価するため、以後の zsh では `devbox shell` なしで利用できる。パッケージの解決結果は Devbox のグローバル環境側で保持される。
+`~/.zshrc` は `devbox global shellenv` を評価するため、以後の zsh では `devbox shell` なしで利用できる。パッケージの解決結果は Devbox のグローバル環境側で保持される。
 
 `fcitx5`、`fcitx5-mozc`、`ddcutil`、`wl-clipboard` など、デスクトップ環境やホスト固有の機能に依存するものは引き続き apt で管理する。`herdr` と `hunk` も Devbox で管理する。
 

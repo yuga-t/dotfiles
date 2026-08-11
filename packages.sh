@@ -59,7 +59,8 @@ install_devbox_packages() {
         sheldon starship universal-ctags unzip vim yazi zsh
     )
     devbox global add "${packages[@]}"
-    eval "$(devbox global shellenv --init-hook)"
+    eval "$(devbox global shellenv --preserve-path-stack -r)"
+    hash -r
 }
 
 install_apt_packages() {

@@ -1,7 +1,7 @@
 # Devbox global packages
 if command -v devbox >/dev/null 2>&1 \
     && devbox global list >/dev/null 2>&1; then
-    eval "$(devbox global shellenv --init-hook)"
+    eval "$(devbox global shellenv)"
 fi
 
 # Oh My Zsh
