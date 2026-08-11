@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# link.sh の挙動を検証する。Dockerfile.test 内のコンテナで実行される想定。
+# link.sh の挙動を検証する。Dockerfile の test stage 内で実行される想定。
 # ホストで直接実行すると既存の dotfiles を書き換える可能性があるので、
 # 通常は ./test.sh から呼ぶこと。
 #

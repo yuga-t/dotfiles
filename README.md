@@ -61,7 +61,7 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 ./test.sh
 ```
 
-中身は `Dockerfile.test` をビルドして `scripts/run-link-tests.sh` をコンテナ内で走らせるだけ。ネットワーク経由のパッケージインストールはテストしない（あくまで `link.sh` とローカルオーバーライドの挙動を確認する用途）。
+中身は `Dockerfile` の `test` stage をビルドして `scripts/run-link-tests.sh` をコンテナ内で走らせるだけ。ネットワーク経由のパッケージインストールはテストしない（あくまで `link.sh` とローカルオーバーライドの挙動を確認する用途）。
 
 ## Devbox
 
