@@ -55,7 +55,7 @@ install_devbox_packages() {
     export PATH="$HOME/.local/bin:$PATH"
     local packages=(
         atuin bat delta eza fd ffmpeg ffmpegthumbnailer fzf git-lfs
-        herdr hunk imagemagick jq p7zip poppler_utils python3 ripgrep
+        herdr hunk imagemagick jq p7zip poppler_utils ripgrep
         sheldon starship universal-ctags unzip yazi
     )
     devbox global add "${packages[@]}"
