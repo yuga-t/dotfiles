@@ -5,7 +5,7 @@
   #   email = your@email.example
 
 [core]
-  editor = vim
+  editor = nvim
   pager = delta
   quotepath = false
 
@@ -22,7 +22,7 @@
   navigate = true # use n and N to move between diff sections
 
 [merge]
-  tool = vimdiff
+  tool = nvimdiff
   conflictstyle = zdiff3
 
 [mergetool]

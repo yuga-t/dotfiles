@@ -54,9 +54,11 @@ install_devbox_packages() {
 
     export PATH="$HOME/.local/bin:$PATH"
     local packages=(
-        atuin bat delta eza fd ffmpeg ffmpegthumbnailer fzf git-lfs
-        herdr hunk imagemagick jq p7zip poppler_utils ripgrep
-        sheldon starship universal-ctags unzip yazi
+        atuin bat clang-tools delta eza fd ffmpeg ffmpegthumbnailer fzf
+        git-lfs gopls herdr hunk imagemagick jq neovim p7zip poppler_utils
+        pyright ripgrep sheldon starship taplo typescript-language-server
+        universal-ctags unzip vscode-langservers-extracted
+        yaml-language-server yazi
     )
     devbox global add "${packages[@]}"
     eval "$(devbox global shellenv --preserve-path-stack -r)"
@@ -65,20 +67,10 @@ install_devbox_packages() {
 
 install_apt_packages() {
     local packages=(
-        xsel wl-clipboard ddcutil fcitx5 fcitx5-mozc fontconfig unzip vim zsh
+        xsel wl-clipboard ddcutil fcitx5 fcitx5-mozc fontconfig unzip zsh
     )
     apt_cmd update
     apt_cmd install -y "${packages[@]}"
-}
-
-install_vim_plug() {
-    if [ -f "$HOME/.vim/autoload/plug.vim" ]; then
-        echo "[SKIP] vim-plug already installed"
-        return
-    fi
-
-    curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }
 
 install_cica_fonts() {
@@ -112,7 +104,6 @@ main() {
     mkdir -p "$HOME/.local/bin"
     install_devbox_packages
     install_apt_packages
-    install_vim_plug
     install_cica_fonts
     echo "[INFO] Packages installed"
 }

@@ -25,7 +25,7 @@ curl -fsSL https://raw.githubusercontent.com/yuga-t/dotfiles/main/install.sh | b
 |---|---|---|
 | `install.sh` | ◯ | git の `pull` + `link.sh` + `packages.sh` を順に再実行 |
 | `link.sh` | ◯ (idempotent) | 変化のないファイルはスキップ。差分があるものだけバックアップ + 更新 |
-| `packages.sh` | ◯ | apt は毎回更新、Devbox は不足分を追加、vim-plug と Cica は導入済みならスキップ |
+| `packages.sh` | ◯ | apt は毎回更新、Devbox は不足分を追加、Cica は導入済みならスキップ |
 
 `link.sh` のファイル別ルール:
 
@@ -41,7 +41,7 @@ curl -fsSL https://raw.githubusercontent.com/yuga-t/dotfiles/main/install.sh | b
 |---|---|---|
 | zsh env | `~/.zshenv` | `~/.zshenv.local` |
 | zsh rc | `~/.zshrc` | `~/.zshrc.local` |
-| vim | `~/.vimrc` | `~/.vimrc.local` |
+| neovim | `~/.config/nvim/init.lua` | `~/.config/nvim/local.lua` |
 | git | `~/.gitconfig` | `~/.gitconfig.local` |
 
 ### 初回セットアップで必須: `~/.gitconfig.local`
@@ -75,7 +75,9 @@ CLI ツールは `packages.sh` から `devbox global add` で導入する。Devb
 
 `~/.zshrc` は `devbox global shellenv` を評価するため、以後の zsh では `devbox shell` なしで利用できる。パッケージの解決結果は Devbox のグローバル環境側で保持される。
 
-`zsh` と `vim`、`fcitx5`、`fcitx5-mozc`、`ddcutil`、`wl-clipboard` など、デスクトップ環境やホスト固有の機能に依存するものは apt で管理する。`herdr` と `hunk` も Devbox で管理する。
+`zsh`、`fcitx5`、`fcitx5-mozc`、`ddcutil`、`wl-clipboard` など、デスクトップ環境やホスト固有の機能に依存するものは apt で管理する。`neovim`、`herdr`、`hunk` も Devbox で管理する。
+
+Neovim の LSP サーバーも Devbox で管理する (`gopls`、`clang-tools`、`pyright`、`typescript-language-server`、`yaml-language-server`、`vscode-langservers-extracted`、`taplo`)。例外として `rust-analyzer` は rustc とのバージョンを揃えるため rustup で管理する (`rustup component add rust-analyzer`)。他の言語を使い始めたら `devbox global add` で追加し、`packages.sh` のリストと `init.lua` の `servers` テーブルにも反映する。
 
 ## Tips
 
