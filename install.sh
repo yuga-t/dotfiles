@@ -33,12 +33,6 @@ if [ "$(whoami)" != "root" ] && [ -z "$SUDO" ]; then
     exit 1
 fi
 
-if ! command -v curl >/dev/null 2>&1; then
-    echo "[INFO] Installing curl"
-    $SUDO apt update
-    $SUDO apt install -y curl
-fi
-
 $SUDO apt update
 $SUDO apt install -y git
 
