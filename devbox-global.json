@@ -1,0 +1,29 @@
+{
+  "packages": [
+    "atuin@latest",
+    "bat@latest",
+    "curl@latest",
+    "eza@latest",
+    "fd@latest",
+    "ffmpeg@latest",
+    "ffmpegthumbnailer@latest",
+    "fzf@latest",
+    "git@latest",
+    "git-delta@latest",
+    "herdr@latest",
+    "hunk@latest",
+    "imagemagick@latest",
+    "jq@latest",
+    "p7zip@latest",
+    "poppler_utils@latest",
+    "python3@latest",
+    "ripgrep@latest",
+    "sheldon@latest",
+    "starship@latest",
+    "universal-ctags@latest",
+    "unzip@latest",
+    "vim@latest",
+    "yazi@latest",
+    "zsh@latest"
+  ]
+}

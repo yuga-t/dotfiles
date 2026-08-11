@@ -22,6 +22,11 @@ plugins=(
 # utility
 #
 
+# Devbox global packages
+if command -v devbox >/dev/null 2>&1; then
+  eval "$(devbox global shellenv)"
+fi
+
 has() {
   type "$1" > /dev/null 2>&1
 }

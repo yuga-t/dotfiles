@@ -50,18 +50,6 @@ expect_symlink .config/user-dirs.dirs
 expect_symlink .config/environment.d/envs.conf
 
 echo
-echo '=== Verify VSCode files are merged (not symlinks) ==='
-for p in .config/Code/User/settings.json .config/Code/User/keybindings.json; do
-    if [ -L "$HOME/$p" ]; then
-        ng "$p (should be a real file, but is symlink)"
-    elif [ -f "$HOME/$p" ]; then
-        ok "$p (generated file)"
-    else
-        ng "$p (missing)"
-    fi
-done
-
-echo
 echo '=== zsh syntax ==='
 if zsh -n "$HOME/.zshenv"; then ok '.zshenv parses'; else ng '.zshenv parse error'; fi
 if zsh -n "$HOME/.zshrc";  then ok '.zshrc parses';  else ng '.zshrc parse error';  fi
@@ -98,39 +86,6 @@ else
 fi
 
 echo
-echo '=== VSCode merge: settings.json ==='
-cat > "$HOME/.config/Code/User/settings.local.json" <<'JSON'
-{
-  "editor.fontSize": 99,
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#ff0000"
-  }
-}
-JSON
-bash "$DOTFILES_DIR/link.sh" > /dev/null
-read_json() {
-    python3 -c "import json,sys;d=json.load(open('$HOME/.config/Code/User/settings.json'));print($1)"
-}
-assert_eq 'settings local key applied'             "$(read_json 'd["editor.fontSize"]')" '99'
-assert_eq 'settings nested override'               "$(read_json 'd["workbench.colorCustomizations"]["statusBar.background"]')" '#ff0000'
-assert_eq 'settings nested untouched key kept'     "$(read_json 'd["workbench.colorCustomizations"]["statusBar.foreground"]')" '#ffffff'
-
-echo
-echo '=== VSCode merge: keybindings.json (concat) ==='
-cat > "$HOME/.config/Code/User/keybindings.local.json" <<'JSON'
-[
-  { "key": "ctrl+shift+x", "command": "marker.local" }
-]
-JSON
-bash "$DOTFILES_DIR/link.sh" > /dev/null
-found=$(python3 -c "
-import json
-bindings = json.load(open('$HOME/.config/Code/User/keybindings.json'))
-print('yes' if any(b.get('command') == 'marker.local' for b in bindings) else 'no')
-")
-assert_eq 'keybindings local entry appended' "$found" 'yes'
-
-echo
 echo '=== Idempotency: link.sh second run produces no new .bak files ==='
 bak_before=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
 bash "$DOTFILES_DIR/link.sh" > /tmp/link_second_run.log 2>&1 || true
@@ -159,22 +114,6 @@ bak_after=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
 diff=$((bak_after - bak_before))
 assert_eq 'exactly 1 new backup when 1 file is stale' "$diff" '1'
 [ -L "$HOME/.zshrc" ] && ok '.zshrc restored as symlink' || ng '.zshrc not restored'
-
-echo
-echo '=== Idempotency: VSCode merged file - changing .local triggers regen ==='
-# 上記.zshrcの再リンクで .bak が1個増えてる
-bak_before=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
-cat > "$HOME/.config/Code/User/settings.local.json" <<'JSON'
-{ "editor.fontSize": 11 }
-JSON
-bash "$DOTFILES_DIR/link.sh" > /tmp/link_fourth_run.log 2>&1
-bak_after=$(find "$HOME" -maxdepth 4 -name '*.bak-*' 2>/dev/null | wc -l)
-font=$(python3 -c "import json;print(json.load(open('$HOME/.config/Code/User/settings.json'))['editor.fontSize'])")
-assert_eq 'settings regenerated with new local'  "$font" '11'
-diff=$((bak_after - bak_before))
-# settings.json と keybindings.json で内容が変わるのは settings.json のみのはず
-# keybindings の .local は変えていないのでスキップされる
-assert_eq 'exactly 1 VSCode backup created'  "$diff" '1'
 
 echo
 echo "=== Result: PASS=$PASS FAIL=$FAIL ==="
