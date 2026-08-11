@@ -9,7 +9,7 @@
 初回インストール（git/clone + dotfilesリンク + パッケージ）:
 
 ```bash
-curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/yuga-t/dotfiles/main/install.sh | bash
 ```
 
 `install.sh` は Git の導入とブートストラップを行う。内部で以下を呼び出す。
@@ -25,7 +25,7 @@ curl -fsSL https://raw.github.com/yuga-t/dotfiles/main/install.sh | bash
 |---|---|---|
 | `install.sh` | ◯ | git の `pull` + `link.sh` + `packages.sh` を順に再実行 |
 | `link.sh` | ◯ (idempotent) | 変化のないファイルはスキップ。差分があるものだけバックアップ + 更新 |
-| `packages.sh` | ◯ (idempotent) | apt も curl 経由のインストールも、既に入っているものはスキップする |
+| `packages.sh` | ◯ | apt は毎回更新、Devbox は不足分を追加、vim-plug と Cica は導入済みならスキップ |
 
 `link.sh` のファイル別ルール:
 

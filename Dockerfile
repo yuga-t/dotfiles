@@ -1,7 +1,8 @@
 # Exercise the bootstrap entry point with the current working tree.
 FROM ubuntu:latest
 
-RUN apt update && apt install -y sudo curl
+RUN apt update && apt install -y sudo curl \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m tester \
     && echo "tester ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
