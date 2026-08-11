@@ -31,8 +31,6 @@ if ! command -v curl >/dev/null 2>&1; then
     $SUDO apt install -y curl
 fi
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 if [ "${SKIP_DEVBOX:-false}" = "true" ]; then
     echo "[INFO] Skipping Devbox installation"
 else
@@ -42,7 +40,32 @@ else
     fi
 
     export PATH="$HOME/.local/bin:$PATH"
-    devbox global pull "$SCRIPT_DIR/devbox.json"
+    devbox_packages=(
+        atuin
+        bat
+        delta
+        eza
+        fd
+        ffmpeg
+        ffmpegthumbnailer
+        fzf
+        herdr
+        hunk
+        imagemagick
+        jq
+        p7zip
+        poppler_utils
+        python3
+        ripgrep
+        sheldon
+        starship
+        universal-ctags
+        unzip
+        vim
+        yazi
+        zsh
+    )
+    devbox global add "${devbox_packages[@]}"
     eval "$(devbox global shellenv --init-hook)"
 fi
 
