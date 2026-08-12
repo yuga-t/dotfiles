@@ -3,6 +3,11 @@
 # Install Devbox and host-dependent packages.
 # Debian based Linux only.
 #
+# Env vars:
+#   SKIP_DEVBOX=true  Skip Devbox installation
+#   HEADLESS=true     Skip display-dependent packages (clipboard, DDC, IME) and font install
+#   DEBUG=true        Enable shell tracing
+#
 
 set -eu -o pipefail
 
@@ -66,14 +71,22 @@ install_devbox_packages() {
 }
 
 install_apt_packages() {
-    local packages=(
-        xsel wl-clipboard ddcutil fcitx5 fcitx5-mozc fontconfig unzip zsh
-    )
+    local packages=(fontconfig unzip zsh)
+
+    if [ "${HEADLESS:-false}" != "true" ]; then
+        packages+=(xsel wl-clipboard ddcutil fcitx5 fcitx5-mozc)
+    fi
+
     apt_cmd update
     apt_cmd install -y "${packages[@]}"
 }
 
 install_cica_fonts() {
+    if [ "${HEADLESS:-false}" = "true" ]; then
+        echo "[SKIP] Cica fonts (HEADLESS=true)"
+        return
+    fi
+
     local cica_dir=/usr/local/share/fonts/Cica
     local cica_marker="$cica_dir/.installed"
 

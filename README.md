@@ -77,6 +77,8 @@ CLI ツールは `packages.sh` から `devbox global add` で導入する。Devb
 
 `zsh`、`fcitx5`、`fcitx5-mozc`、`ddcutil`、`wl-clipboard` など、デスクトップ環境やホスト固有の機能に依存するものは apt で管理する。`neovim`、`herdr`、`hunk` も Devbox で管理する。
 
+ディスプレイのないリモート専用ホストでは `HEADLESS=true ./packages.sh` を実行する。クリップボード (`xsel`、`wl-clipboard`)、モニタ制御 (`ddcutil`)、IME (`fcitx5`、`fcitx5-mozc`) の apt パッケージと Cica フォントの導入をスキップする。
+
 Neovim の LSP サーバーも Devbox で管理する (`gopls`、`clang-tools`、`pyright`、`typescript-language-server`、`yaml-language-server`、`vscode-langservers-extracted`、`taplo`)。例外として `rust-analyzer` は rustc とのバージョンを揃えるため rustup で管理する (`rustup component add rust-analyzer`)。他の言語を使い始めたら `devbox global add` で追加し、`packages.sh` のリストと `init.lua` の `servers` テーブルにも反映する。
 
 ## Tips
