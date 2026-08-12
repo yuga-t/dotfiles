@@ -193,6 +193,14 @@ require("lazy").setup({
     opts = {},
   },
 
+  -- サインカラムに git 差分マークを表示
+  -- キーバインド: ]c/[c (ハンク間移動)
+  {
+    "lewis6991/gitsigns.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    opts = {},
+  },
+
   -- sudo で保存
   -- キーバインド: w!! (コマンドラインで入力すると SudaWrite に展開される)
   {
