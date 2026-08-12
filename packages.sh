@@ -54,7 +54,7 @@ install_devbox_packages() {
 
     export PATH="$HOME/.local/bin:$PATH"
     local packages=(
-        atuin bat clang-tools delta eza fd ffmpeg ffmpegthumbnailer fzf
+        atuin bat clang-tools delta direnv eza fd ffmpeg ffmpegthumbnailer fzf
         git-lfs gopls herdr hunk imagemagick jq neovim p7zip poppler_utils
         pyright ripgrep sheldon starship taplo typescript-language-server
         universal-ctags unzip vscode-langservers-extracted

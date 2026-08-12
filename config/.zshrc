@@ -4,6 +4,11 @@ if command -v devbox >/dev/null 2>&1 \
     eval "$(devbox global shellenv)"
 fi
 
+# direnv (per-project devbox auto-activation)
+if command -v direnv >/dev/null 2>&1; then
+    eval "$(direnv hook zsh)"
+fi
+
 # Oh My Zsh
 export ZSH="$HOME/.local/share/sheldon/repos/github.com/ohmyzsh/ohmyzsh"
 export ZSH_THEME=""
