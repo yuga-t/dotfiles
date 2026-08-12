@@ -106,6 +106,16 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  -- カラースキーム
+  {
+    "navarasu/onedark.nvim",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme("onedark")
+    end,
+  },
+
   -- ステータスライン
   {
     "nvim-lualine/lualine.nvim",
@@ -161,11 +171,26 @@ require("lazy").setup({
     event = { "BufReadPost", "BufNewFile" },
   },
 
-  -- git
-  -- キーバインド: :Git (ステータス画面。s/u でステージ/アンステージ、cc でコミット)
+  -- 括弧・クォートの自動閉じ
   {
-    "tpope/vim-fugitive",
-    cmd = { "Git", "G" },
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {},
+  },
+
+  -- ファイルを開いたとき前回のカーソル位置に復帰
+  {
+    "farmergreg/vim-lastplace",
+    event = "BufReadPost",
+  },
+
+  -- git
+  -- キーバインド: :Neogit (ステータス画面。s/u でステージ/アンステージ、c でコミット)
+  {
+    "NeogitOrg/neogit",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = "Neogit",
+    opts = {},
   },
 
   -- sudo で保存
