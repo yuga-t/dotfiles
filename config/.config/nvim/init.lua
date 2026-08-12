@@ -32,9 +32,6 @@ vim.opt.shiftwidth = 4
 -- 連続した空白に対してタブキーでカーソルが動く幅
 vim.opt.softtabstop = 4
 
--- ブロックに応じてインデント
-vim.opt.smartindent = true
-
 -- 折返し時に表示行単位で移動できるように
 vim.keymap.set("n", "j", "gj")
 vim.keymap.set("n", "k", "gk")
@@ -77,6 +74,9 @@ vim.opt.clipboard = "unnamedplus"
 -- 新しいウィンドウを下/右に開く
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+
+-- truecolor を明示的に有効化 (lualine/flash.nvim の表示を安定させる)
+vim.opt.termguicolors = true
 
 -- Leaderキー (プラグインの読み込みより前に設定する必要がある)
 vim.g.mapleader = " "
@@ -145,6 +145,12 @@ require("lazy").setup({
     "kylechui/nvim-surround",
     event = "VeryLazy",
     opts = {},
+  },
+
+  -- ファイルごとにインデント幅を自動検出
+  {
+    "tpope/vim-sleuth",
+    event = { "BufReadPost", "BufNewFile" },
   },
 
   -- git
