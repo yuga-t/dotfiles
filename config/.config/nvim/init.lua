@@ -86,8 +86,7 @@ vim.g.mapleader = " "
 -- プラグイン (lazy.nvim)
 --
 
--- コメントトグル (gc{motion}, gcc で1行) は vim-commentary の代替として
--- Neovim 0.10+ のビルトイン機能を使う
+-- コメントトグル (gc{motion}, gcc で1行) は Neovim 0.10+ のビルトイン機能を使う
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
@@ -107,14 +106,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-  -- ステータスライン (vim-airline の代替)
+  -- ステータスライン
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
     opts = {},
   },
 
-  -- ファイラ (vim-fern の代替): ディレクトリをバッファとして編集できる
+  -- ファイラ: ディレクトリをバッファとして編集できる
   -- キーバインド: - (親ディレクトリを開く), 開いたバッファ内は通常の編集操作
   --   (dd で削除, o/O で新規作成, r でリネームなど) がそのままファイル操作になる。
   --   :w で確定
@@ -147,7 +146,7 @@ require("lazy").setup({
     },
   },
 
-  -- surround (vim-surround の Lua 版。ys / cs / ds は同じ)
+  -- surround
   -- キーバインド: ys{motion}{char} (囲む), cs{from}{to} (置換), ds{char} (削除)
   --   例: ysiw" (単語を"で囲む), cs"' ("を'に置換), ds" (囲みの"を削除)
   {
@@ -169,13 +168,12 @@ require("lazy").setup({
     cmd = { "Git", "G" },
   },
 
-  -- sudo で保存 (旧 vimrc の w!! の代替)
+  -- sudo で保存
   -- キーバインド: w!! (コマンドラインで入力すると SudaWrite に展開される)
   {
     "lambdalisue/vim-suda",
     cmd = { "SudaWrite", "SudaRead" },
     init = function()
-      -- w!! で SudaWrite を呼ぶ (旧 vimrc 互換)
       vim.cmd.cnoreabbrev("w!!", "SudaWrite")
     end,
   },
@@ -187,7 +185,7 @@ require("lazy").setup({
     event = "VeryLazy",
   },
 
-  -- ラベルジャンプ (easymotion の代替)
+  -- ラベルジャンプ
   -- キーバインド: <Leader>s{char...} (画面内にラベルが表示され、押すとジャンプ)
   {
     "folke/flash.nvim",
@@ -208,7 +206,7 @@ require("lazy").setup({
     },
   },
 
-  -- 補完 (coc.nvim の代替)
+  -- 補完
   -- キーバインド: Tab/S-Tab (次/前の候補), Enter (確定), Ctrl-e (キャンセル)
   {
     "saghen/blink.cmp",
