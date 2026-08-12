@@ -82,6 +82,21 @@ vim.opt.termguicolors = true
 -- Leaderキー (プラグインの読み込みより前に設定する必要がある)
 vim.g.mapleader = " "
 
+-- ファイルを開いたら、そのファイルの git ルートへタブローカルで cd する
+-- (telescope の find_files / git_files / live_grep がプロジェクトルート基準で動くようにするため)
+vim.api.nvim_create_autocmd("BufEnter", {
+  callback = function(args)
+    local file = vim.api.nvim_buf_get_name(args.buf)
+    if file == "" then
+      return
+    end
+    local root = vim.fs.root(file, ".git")
+    if root then
+      vim.cmd.tcd(root)
+    end
+  end,
+})
+
 --
 -- プラグイン (lazy.nvim)
 --
@@ -142,17 +157,17 @@ require("lazy").setup({
     },
   },
 
-  -- fzf (バイナリは devbox で導入している)
+  -- ファジー検索 (fd/ripgrep は devbox で導入している)
   -- キーバインド: <Leader>f (ファイル検索), <Leader>g (git ファイル検索),
   --   <Leader>t (ctags 検索), <Leader>r (ripgrep 全文検索)
   {
-    "junegunn/fzf.vim",
-    dependencies = { "junegunn/fzf" },
+    "nvim-telescope/telescope.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
-      { "<Leader>f", "<Cmd>Files<CR>", desc = "ファイル検索" },
-      { "<Leader>g", "<Cmd>GFiles<CR>", desc = "git ファイル検索" },
-      { "<Leader>t", "<Cmd>Tags<CR>", desc = "ctags 検索" },
-      { "<Leader>r", "<Cmd>Rg<CR>", desc = "ripgrep 全文検索" },
+      { "<Leader>f", "<Cmd>Telescope find_files<CR>", desc = "ファイル検索" },
+      { "<Leader>g", "<Cmd>Telescope git_files<CR>", desc = "git ファイル検索" },
+      { "<Leader>t", "<Cmd>Telescope tags<CR>", desc = "ctags 検索" },
+      { "<Leader>r", "<Cmd>Telescope live_grep<CR>", desc = "ripgrep 全文検索" },
     },
   },
 
