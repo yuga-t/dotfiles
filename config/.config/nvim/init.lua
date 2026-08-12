@@ -82,29 +82,6 @@ vim.opt.splitright = true
 vim.g.mapleader = " "
 
 --
--- LSP (coc.nvim の代替)
---
-
--- キーマップは coc 時代の設定を踏襲
--- K (hover), grn (rename), gra (code action), grr (references) は
--- Neovim 0.11+ のデフォルトマッピングにある
-vim.api.nvim_create_autocmd("LspAttach", {
-  callback = function(args)
-    local opts = { buffer = args.buf, silent = true }
-
-    -- GoTo code navigation
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "gy", vim.lsp.buf.type_definition, opts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-
-    -- diagnostics の移動
-    vim.keymap.set("n", "[g", function() vim.diagnostic.jump({ count = -1 }) end, opts)
-    vim.keymap.set("n", "]g", function() vim.diagnostic.jump({ count = 1 }) end, opts)
-  end,
-})
-
---
 -- プラグイン (lazy.nvim)
 --
 
@@ -148,7 +125,6 @@ require("lazy").setup({
     },
     keys = {
       { "-", "<Cmd>Oil<CR>", desc = "親ディレクトリを開く" },
-      { "<Leader>ee", "<Cmd>Oil<CR>", desc = "親ディレクトリを開く (fern 互換)" },
     },
   },
 
@@ -220,13 +196,8 @@ require("lazy").setup({
     event = "InsertEnter",
     opts = {
       keymap = {
-        -- Enter で確定
+        -- Enter で確定、Tab / Shift+Tab で次/前の候補
         preset = "enter",
-        -- Tab / Ctrl+j で次の候補、Shift+Tab / Ctrl+k で前の候補 (coc 互換)
-        ["<Tab>"] = { "select_next", "fallback" },
-        ["<S-Tab>"] = { "select_prev", "fallback" },
-        ["<C-j>"] = { "select_next", "fallback" },
-        ["<C-k>"] = { "select_prev", "fallback" },
       },
     },
   },
