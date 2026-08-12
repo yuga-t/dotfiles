@@ -1,5 +1,9 @@
 onboarding = false
 
+[experimental]
+# yaziの画像プレビュー(Kitty graphics protocol)を有効化。Ghostty側の対応が前提。
+kitty_graphics = true
+
 [ui]
 agent_panel_sort = "priority"
 
