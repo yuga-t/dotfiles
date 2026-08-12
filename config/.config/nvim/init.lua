@@ -33,8 +33,8 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 
 -- 折返し時に表示行単位で移動できるように
-vim.keymap.set("n", "j", "gj")
-vim.keymap.set("n", "k", "gk")
+vim.keymap.set("n", "j", "gj", { desc = "表示行単位で下へ移動" })
+vim.keymap.set("n", "k", "gk", { desc = "表示行単位で上へ移動" })
 
 --
 -- 検索
@@ -52,10 +52,11 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
   command = "cwindow",
 })
 
--- quickfix での移動 ([q ]q [Q ]Q) は Neovim 0.11+ のデフォルトマッピングにある
+-- quickfix での移動 ([q 前へ, ]q 次へ, [Q 最初へ, ]Q 最後へ) は
+-- Neovim 0.11+ のデフォルトマッピングにある
 
 -- esc連打でハイライト解除
-vim.keymap.set("n", "<Esc><Esc>", "<Cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<Esc><Esc>", "<Cmd>nohlsearch<CR>", { desc = "検索ハイライトを解除" })
 
 --
 -- その他
@@ -85,7 +86,8 @@ vim.g.mapleader = " "
 -- プラグイン (lazy.nvim)
 --
 
--- コメントトグル (vim-commentary の gc) は Neovim 0.10+ のビルトイン機能を使う
+-- コメントトグル (gc{motion}, gcc で1行) は vim-commentary の代替として
+-- Neovim 0.10+ のビルトイン機能を使う
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.uv.fs_stat(lazypath) then
@@ -113,6 +115,9 @@ require("lazy").setup({
   },
 
   -- ファイラ (vim-fern の代替): ディレクトリをバッファとして編集できる
+  -- キーバインド: - (親ディレクトリを開く), 開いたバッファ内は通常の編集操作
+  --   (dd で削除, o/O で新規作成, r でリネームなど) がそのままファイル操作になる。
+  --   :w で確定
   {
     "stevearc/oil.nvim",
     -- `nvim <dir>` で直接開けるように遅延読み込みしない
@@ -129,6 +134,8 @@ require("lazy").setup({
   },
 
   -- fzf (バイナリは devbox で導入している)
+  -- キーバインド: <Leader>f (ファイル検索), <Leader>g (git ファイル検索),
+  --   <Leader>t (ctags 検索), <Leader>r (ripgrep 全文検索)
   {
     "junegunn/fzf.vim",
     dependencies = { "junegunn/fzf" },
@@ -141,6 +148,8 @@ require("lazy").setup({
   },
 
   -- surround (vim-surround の Lua 版。ys / cs / ds は同じ)
+  -- キーバインド: ys{motion}{char} (囲む), cs{from}{to} (置換), ds{char} (削除)
+  --   例: ysiw" (単語を"で囲む), cs"' ("を'に置換), ds" (囲みの"を削除)
   {
     "kylechui/nvim-surround",
     event = "VeryLazy",
@@ -154,12 +163,14 @@ require("lazy").setup({
   },
 
   -- git
+  -- キーバインド: :Git (ステータス画面。s/u でステージ/アンステージ、cc でコミット)
   {
     "tpope/vim-fugitive",
     cmd = { "Git", "G" },
   },
 
   -- sudo で保存 (旧 vimrc の w!! の代替)
+  -- キーバインド: w!! (コマンドラインで入力すると SudaWrite に展開される)
   {
     "lambdalisue/vim-suda",
     cmd = { "SudaWrite", "SudaRead" },
@@ -169,13 +180,15 @@ require("lazy").setup({
     end,
   },
 
-  -- インデントのテキストオブジェクト (ii, ai)
+  -- インデントのテキストオブジェクト
+  -- キーバインド: ii/ai (同じインデントの範囲, 例: dii, vai)
   {
     "michaeljsmith/vim-indent-object",
     event = "VeryLazy",
   },
 
   -- ラベルジャンプ (easymotion の代替)
+  -- キーバインド: <Leader>s{char...} (画面内にラベルが表示され、押すとジャンプ)
   {
     "folke/flash.nvim",
     opts = {
@@ -196,6 +209,7 @@ require("lazy").setup({
   },
 
   -- 補完 (coc.nvim の代替)
+  -- キーバインド: Tab/S-Tab (次/前の候補), Enter (確定), Ctrl-e (キャンセル)
   {
     "saghen/blink.cmp",
     version = "1.*",
@@ -209,6 +223,9 @@ require("lazy").setup({
   },
 
   -- LSP サーバー設定の定義集。有効化は Neovim 0.11+ の vim.lsp.enable() で行う
+  -- キーバインド (LSP アタッチ時、Neovim 0.11+ のデフォルト):
+  --   K (hover), grn (rename), gra (code action), grr (references),
+  --   gri (implementation), gO (document symbols), ]d/[d (診断ジャンプ)
   {
     "neovim/nvim-lspconfig",
     dependencies = { "saghen/blink.cmp" },
