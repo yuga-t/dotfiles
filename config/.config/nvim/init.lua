@@ -1,10 +1,6 @@
 --
--- 旧 .vimrc を踏襲したミニマルな Neovim 設定
+-- ミニマルな Neovim 設定
 -- ref: https://www.khuedoan.com/posts/minimal-neovim-setup-from-scratch
---
--- Neovim ではデフォルトが変わったため、.vimrc にあった以下の設定は不要:
---   showcmd / wildmenu / autoindent / incsearch / hlsearch / wrapscan /
---   autoread / nobackup / encoding / syntax on / filetype plugin indent on
 --
 
 --
