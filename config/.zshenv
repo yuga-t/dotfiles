@@ -12,6 +12,9 @@ fi
 # Rust
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
+# デフォルトエディタ (yazi の $EDITOR オープナーなどが参照する)
+export EDITOR=nvim
+
 # Android Studio
 if [ -d "/usr/local/android-studio/jbr" ]; then
     export JAVA_HOME=/usr/local/android-studio/jbr
