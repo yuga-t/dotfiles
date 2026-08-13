@@ -2,6 +2,9 @@
 # 隠しファイルを表示
 show_hidden = true
 
+# 親ディレクトリ列を非表示
+ratio = [0, 3, 4]
+
 # git.yazi: ファイル一覧にgitの差分状態を表示
 [[plugin.prepend_fetchers]]
 url   = "*"
