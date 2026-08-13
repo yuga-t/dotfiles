@@ -65,6 +65,19 @@ install_devbox_packages() {
     hash -r
 }
 
+install_yazi_plugins() {
+    # package.toml はgit管理しない (rev/hashのピン留めをdotfilesに持ち込みたくないため)。
+    # 代わりにプラグイン名をここに列挙し、毎回最新版を取得する。
+    if command -v ya >/dev/null 2>&1; then
+        echo "[INFO] Installing Yazi plugins"
+        local plugins=(
+            yazi-rs/plugins:git
+            Rolv-Apneseth/starship
+        )
+        ya pkg add "${plugins[@]}"
+    fi
+}
+
 install_apt_packages() {
     local packages=(
         xsel wl-clipboard ddcutil fcitx5 fcitx5-mozc fontconfig unzip zsh
@@ -105,6 +118,7 @@ main() {
     install_devbox_packages
     install_apt_packages
     install_cica_fonts
+    install_yazi_plugins
     echo "[INFO] Packages installed"
 }
 
