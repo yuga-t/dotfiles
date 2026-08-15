@@ -35,6 +35,12 @@ elif command -v xsel >/dev/null 2>&1; then
     alias clip="xsel --clipboard --input"
 fi
 
+# bat aliases (plain style, without/with pager disabled)
+if command -v bat >/dev/null 2>&1; then
+    alias batp="bat -p"
+    alias batpp="bat -pp"
+fi
+
 # Atuin
 if [ -f "$HOME/.atuin/bin/env" ]; then
     . "$HOME/.atuin/bin/env"
