@@ -51,8 +51,8 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 -- quickfix での移動 ([q 前へ, ]q 次へ, [Q 最初へ, ]Q 最後へ) は
 -- Neovim 0.11+ のデフォルトマッピングにある
 
--- esc連打でハイライト解除
-vim.keymap.set("n", "<Esc><Esc>", "<Cmd>nohlsearch<CR>", { desc = "検索ハイライトを解除" })
+-- escでハイライト解除
+vim.keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR>", { desc = "検索ハイライトを解除" })
 
 --
 -- その他
@@ -165,23 +165,6 @@ require("lazy").setup({
       { "<Leader>t", "<Cmd>Telescope tags<CR>", desc = "ctags 検索" },
       { "<Leader>r", "<Cmd>Telescope live_grep<CR>", desc = "ripgrep 全文検索" },
     },
-    config = function()
-      local actions = require("telescope.actions")
-
-      -- ノーマルモードの <Esc> (閉じる) は、グローバルな <Esc><Esc>
-      -- マッピング (nohlsearch) と前方一致してしまい、2打目にどちらへ
-      -- 化けるか確定するまで timeoutlen 分待たされ、閉じるのが遅延する。
-      -- nowait を付け、曖昧性判定を待たずに <Esc> を即確定させる。
-      require("telescope").setup({
-        defaults = {
-          mappings = {
-            n = {
-              ["<esc>"] = { actions.close, type = "action", opts = { nowait = true } },
-            },
-          },
-        },
-      })
-    end,
   },
 
   -- surround
