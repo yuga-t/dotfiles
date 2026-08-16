@@ -72,7 +72,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
--- truecolor を明示的に有効化 (lualine/flash.nvim の表示を安定させる)
+-- truecolor を明示的に有効化 (lualine の表示を安定させる)
 vim.opt.termguicolors = true
 
 -- Leaderキー (プラグインの読み込みより前に設定する必要がある)
@@ -154,16 +154,17 @@ require("lazy").setup({
   },
 
   -- ファジー検索 (fd/ripgrep は devbox で導入している)
-  -- キーバインド: <Leader>f (ファイル検索), <Leader>g (git ファイル検索),
-  --   <Leader>t (ctags 検索), <Leader>r (ripgrep 全文検索)
+  -- キーバインド: <Leader>s (ファイル名検索), <Leader>S (ripgrep 全文検索),
+  --   <Leader>g (git ファイル検索), <Leader>t (ctags 検索)
+  -- (yazi の s/S (fd/rg 検索) とニーモニックを揃えている)
   {
     "nvim-telescope/telescope.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     keys = {
-      { "<Leader>f", "<Cmd>Telescope find_files<CR>", desc = "ファイル検索" },
+      { "<Leader>s", "<Cmd>Telescope find_files<CR>", desc = "ファイル名検索" },
+      { "<Leader>S", "<Cmd>Telescope live_grep<CR>", desc = "ripgrep 全文検索" },
       { "<Leader>g", "<Cmd>Telescope git_files<CR>", desc = "git ファイル検索" },
       { "<Leader>t", "<Cmd>Telescope tags<CR>", desc = "ctags 検索" },
-      { "<Leader>r", "<Cmd>Telescope live_grep<CR>", desc = "ripgrep 全文検索" },
     },
     config = function()
       require("telescope").setup({
@@ -245,27 +246,6 @@ require("lazy").setup({
   {
     "michaeljsmith/vim-indent-object",
     event = "VeryLazy",
-  },
-
-  -- ラベルジャンプ
-  -- キーバインド: <Leader>s{char...} (画面内にラベルが表示され、押すとジャンプ)
-  {
-    "folke/flash.nvim",
-    opts = {
-      modes = {
-        -- 通常の / 検索や f/t は素の挙動のまま
-        search = { enabled = false },
-        char = { enabled = false },
-      },
-    },
-    keys = {
-      {
-        "<Leader>s",
-        mode = { "n", "x", "o" },
-        function() require("flash").jump() end,
-        desc = "ラベルジャンプ",
-      },
-    },
   },
 
   -- 補完
