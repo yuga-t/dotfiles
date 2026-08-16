@@ -165,6 +165,24 @@ require("lazy").setup({
       { "<Leader>t", "<Cmd>Telescope tags<CR>", desc = "ctags 検索" },
       { "<Leader>r", "<Cmd>Telescope live_grep<CR>", desc = "ripgrep 全文検索" },
     },
+    config = function()
+      require("telescope").setup({
+        defaults = {
+          -- live_grep でも隠しファイルを対象にする (.gitignore は引き続き尊重)
+          vimgrep_arguments = {
+            "rg", "--color=never", "--no-heading", "--with-filename",
+            "--line-number", "--column", "--smart-case", "--hidden",
+          },
+          -- hidden = true にすると .git の中身まで拾ってしまうため除外
+          file_ignore_patterns = { "%.git/" },
+        },
+        pickers = {
+          -- find_files で隠しファイルも対象にする
+          -- (dotfiles リポジトリはファイルの大半がドット始まりのため)
+          find_files = { hidden = true, no_ignore = false },
+        },
+      })
+    end,
   },
 
   -- surround
